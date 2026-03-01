@@ -169,6 +169,176 @@
         /* Welcome screen inside chat */
         #chatWelcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px; opacity: 0.85; }
         #chatWelcome .gemini-badge { background: linear-gradient(135deg,#4285f4,#34a853,#fbbc04,#ea4335); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1rem; font-weight: 900; }
+
+        /* ===================================================
+           MOBILE RESPONSIVE — max-width: 768px
+        =================================================== */
+        @media (max-width: 768px) {
+
+            /* --- LOGIN --- */
+            #loginScreen > div { padding: 2rem 1.5rem; border-radius: 2rem; }
+            #loginScreen h2 { font-size: 1.4rem; }
+            #loginScreen input { font-size: 1rem; padding: 0.9rem 1.2rem; }
+            #loginScreen button { font-size: 0.95rem; padding: 0.9rem; }
+
+            /* --- OTP --- */
+            #otpScreen > div { padding: 2rem 1.2rem; border-radius: 2rem; }
+            #otpScreen h2 { font-size: 1.6rem; }
+            .otp-slot { width: 2.8rem; height: 3.8rem; font-size: 1.8rem; border-radius: 0.8rem; }
+            #otpScreen button { font-size: 1rem; padding: 1rem; }
+
+            /* --- DASHBOARD --- */
+            #mainDashboard { padding: 0.6rem; gap: 0.6rem; }
+
+            /* Header mobile: logo + title bên trái, buttons bên phải dạng icon */
+            #mainDashboard > header {
+                padding: 0.75rem 1rem;
+                border-radius: 1.2rem;
+                border-bottom-width: 4px;
+            }
+            #mainDashboard > header > div:first-child { gap: 0.6rem; }
+            #mainDashboard > header img { width: 6rem; }
+            #mainDashboard > header > div:first-child > div.h-14 { display: none; }
+            #mainDashboard > header span.text-3xl { font-size: 0.9rem; }
+
+            /* Buttons: chỉ hiện icon trên mobile */
+            #mainDashboard > header > div:last-child { gap: 0.4rem; }
+            #mainDashboard > header > div:last-child button {
+                padding: 0.6rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0;        /* ẩn text */
+                border-width: 2px;
+            }
+            #mainDashboard > header > div:last-child button i { width: 1.3rem; height: 1.3rem; }
+            #mainDashboard > header > div:last-child button span { display: none; }
+
+            /* Table title bar */
+            #mainDashboard .dashboard-card { border-radius: 1.2rem; }
+            #mainDashboard .dashboard-card > div:first-child { padding: 0.7rem 1rem; }
+            #mainDashboard .dashboard-card h2 { font-size: 1.1rem; }
+            #mainDashboard .dashboard-card > div:first-child i.w-10 { width: 1.4rem; height: 1.4rem; }
+            #btnToggleFilter { font-size: 0.7rem; padding: 0.5rem 0.75rem; }
+            .btn-refresh-top { padding: 0.5rem; }
+            .btn-refresh-top i { width: 1.3rem; height: 1.3rem; }
+
+            /* Filter panel */
+            #filterPanel.open { max-height: 700px; }
+            #filterPanel > div:first-child { padding: 0.75rem 1rem; gap: 0.75rem; }
+
+            /* Table: chỉ giữ cột ID, Tên, Đơn vị, Action */
+            .col-ma, .col-tailiieu, .col-createdat, .col-createdby, .col-modat, .col-modby { display: none; }
+            #theadWrapper table, #tbodyWrapper table { min-width: 0 !important; }
+            .col-id { width: 50px; }
+            .col-ten { width: auto; }
+            .col-donvi { width: 110px; }
+            .col-action { width: 90px; }
+            .db-cell-id { font-size: 0.9rem; }
+            .db-cell-main { font-size: 0.9rem; }
+            .db-cell-sub { font-size: 0.8rem; }
+            .db-header-text th { font-size: 0.72rem; padding: 0.6rem 0.5rem; }
+            #tbodyWrapper td { padding: 0.6rem 0.5rem; }
+            #tbodyWrapper td button { padding: 0.4rem; }
+            #tbodyWrapper td button i { width: 1rem; height: 1rem; }
+            #tbodyWrapper td div.flex { gap: 0.3rem; }
+
+            /* --- CHART SCREEN --- */
+            #chartScreen { padding: 0.6rem; gap: 0.6rem; }
+            #chartScreen > header {
+                padding: 0.75rem 1rem;
+                border-radius: 1.2rem;
+                border-bottom-width: 4px;
+            }
+            #chartScreen > header img { width: 6rem; }
+            #chartScreen > header > div:first-child > div.h-14 { display: none; }
+            #chartScreen > header span.text-3xl { font-size: 0.9rem; }
+            #chartScreen > header button { padding: 0.6rem 0.9rem; font-size: 0.75rem; border-radius: 1rem; border-width: 2px; }
+            #chartScreen > header button i { width: 1.1rem; height: 1.1rem; }
+
+            .kpi-num { font-size: 1.8rem; }
+            .kpi-label { font-size: 0.65rem; }
+            .kpi-card { padding: 1rem 1.2rem; border-radius: 1.2rem; }
+            .chart-card { padding: 1rem 1.2rem; border-radius: 1.2rem; }
+            .chart-card h3 { font-size: 0.8rem; margin-bottom: 0.75rem; }
+
+            /* Charts 1 cột trên mobile */
+            #chart-body > div.grid { grid-template-columns: 1fr !important; }
+
+            /* --- AI AGENT SCREEN --- */
+            #aiScreen { padding: 0.6rem; gap: 0.6rem; }
+            #aiScreen > header {
+                padding: 0.75rem 1rem;
+                border-radius: 1.2rem;
+                border-bottom-width: 4px;
+            }
+            #aiScreen > header img { width: 6rem; }
+            #aiScreen > header > div:first-child > div.h-14 { display: none; }
+            #aiScreen > header span.text-3xl { font-size: 1rem; }
+            #aiScreen > header p.text-xs { display: none; }
+            #aiScreen > header button { padding: 0.55rem 0.9rem; font-size: 0.75rem; border-radius: 1rem; border-width: 2px; }
+            #aiScreen > header button i { width: 1.1rem; height: 1.1rem; }
+
+            #ai-card { border-radius: 1.2rem; }
+
+            /* API key bar mobile */
+            #apiKeyBar { padding: 8px 12px; gap: 8px; flex-wrap: wrap; }
+            #apiKeyBar > i { display: none; }
+            #apiKeyBar span.text-xs { font-size: 0.65rem; }
+            #keyStatus { font-size: 0.65rem; padding: 3px 8px; }
+            #modelSelect { font-size: 0.7rem; padding: 6px 8px; max-width: 140px; }
+            #modelBadge { display: none; }
+
+            /* Suggest bar mobile */
+            #suggestBar { padding: 8px 10px; gap: 6px; }
+            .suggest-chip { font-size: 0.7rem; padding: 5px 10px; }
+
+            /* Chat messages */
+            #chatMessages { padding: 12px; gap: 12px; }
+            .msg-user .bubble { font-size: 0.85rem; padding: 10px 14px; max-width: 85%; }
+            .msg-ai .bubble { font-size: 0.85rem; padding: 10px 14px; max-width: 92%; }
+            .ai-avatar { width: 32px; height: 32px; font-size: 0.9rem; }
+
+            /* Input bar mobile */
+            #chatInputBar { padding: 10px 12px; gap: 8px; }
+            #chatInput { font-size: 0.85rem; padding: 10px 14px; min-height: 42px; }
+            #btnSendChat, #btnClearChat { width: 42px; height: 42px; border-radius: 0.9rem; }
+            #btnSendChat i, #btnClearChat i { width: 1.1rem; height: 1.1rem; }
+
+            /* Welcome screen */
+            #chatWelcome { gap: 10px; }
+            #chatWelcome > div:first-child { font-size: 2.5rem; }
+            #chatWelcome h3 { font-size: 1.1rem; }
+            #chatWelcome p { font-size: 0.8rem; }
+
+            /* --- FORM SCREEN --- */
+            #formScreen header { margin: 0.5rem; border-radius: 1.5rem; }
+            #formScreen header > div { padding: 0 1rem; height: 4rem; }
+            #formScreen header img { width: 5.5rem; }
+            #formScreen header span.text-3xl { font-size: 0.85rem; }
+            #formScreen header > div > div:last-child { gap: 0.5rem; }
+            #userLabel { font-size: 0.8rem; }
+            #modeBadge { font-size: 0.55rem; padding: 0.2rem 0.6rem; }
+            #formScreen header button { padding: 0.4rem 0.75rem; font-size: 0.7rem; border-radius: 1.2rem; }
+            #formScreen main { padding: 0.75rem; }
+            #formScreen main > div { padding: 1.5rem 1.2rem; border-radius: 2rem; }
+            #formScreen form { gap: 1.5rem !important; }
+            #stepA, #stepB, #stepC, #stepD, #stepE, #stepF { gap: 1rem !important; }
+            #stepA h3, #stepB h3, #stepC h3, #stepD h3, #stepE h3, #stepF h3 { font-size: 1.1rem; }
+            #stepA .grid { grid-template-columns: 1fr !important; gap: 1rem 0 !important; }
+            #stepA input, #stepB input, #stepC input, #stepD input { font-size: 0.95rem; padding: 0.75rem 1rem; }
+            #stepA textarea, #stepB textarea { font-size: 0.95rem !important; min-height: 120px !important; }
+            .label-bold { font-size: 11px; }
+            #stepA button, #stepB button, #stepC button, #stepD button, #stepE button { font-size: 0.85rem; padding: 0.75rem 1.5rem; border-radius: 1.5rem; }
+            #submitBtn { font-size: 1.1rem !important; padding: 1rem 2rem !important; border-radius: 2rem !important; }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 380px) {
+            .otp-slot { width: 2.3rem; height: 3.2rem; font-size: 1.5rem; }
+            #mainDashboard > header span.text-3xl { display: none; }
+            #chartScreen > header span.text-3xl { font-size: 0.75rem; }
+            #aiScreen > header span.text-3xl { font-size: 0.8rem; }
+            .suggest-chip { font-size: 0.65rem; padding: 4px 8px; }
+        }
     </style>
 </head>
 <body>
@@ -216,15 +386,15 @@
         <div class="flex items-center gap-4">
             <button onclick="openAiScreen()"
                 class="px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 text-xl border-4 border-purple-400 text-purple-600 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all">
-                <i data-lucide="bot" class="w-8 h-8"></i> AI AGENT
+                <i data-lucide="bot" class="w-8 h-8"></i><span>AI AGENT</span>
             </button>
             <button onclick="openChartScreen()"
                 class="px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 text-xl border-4 border-[#005a3c] text-[#005a3c] hover:bg-[#005a3c] hover:text-white transition-all">
-                <i data-lucide="bar-chart-2" class="w-8 h-8"></i> CHART
+                <i data-lucide="bar-chart-2" class="w-8 h-8"></i><span>CHART</span>
             </button>
             <button onclick="openForm('new')"
                 class="btn-vcb px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 shadow-2xl text-xl">
-                <i data-lucide="plus-square" class="w-8 h-8"></i> ĐĂNG KÝ MỚI
+                <i data-lucide="plus-square" class="w-8 h-8"></i><span>ĐĂNG KÝ MỚI</span>
             </button>
         </div>
     </header>
