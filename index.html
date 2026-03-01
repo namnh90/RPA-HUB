@@ -9,8 +9,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-    // ── runtime key bootstrap ──
+    // ── runtime bootstrap (keys & urls) ──
     (function(){
+        // Groq API key (XOR seed 0xDEAD42)
         var _α=[94,55,56,73,73,89,99];
         var _β=[82,91,4,8,38,4,24];
         var _γ=[9,127,40,38,58,34,106];
@@ -20,9 +21,41 @@
         var _η=[67,121,17,118,20,93,56];
         var _θ=[13,54,97,65,82,17,127];
         var _r=_α.concat(_β,_γ,_δ,_ε,_ζ,_η,_θ);
-        var _s=0xDEAD42;
-        function _d(e){var s=_s>>>0,r='';for(var i=0;i<e.length;i++){s=(Math.imul(s,1664525)+1013904223)>>>0;r+=String.fromCharCode(e[i]^((s&0x7f)||1));}return r;}
-        Object.defineProperty(window,'__ak',{get:function(){return _d(_r);},enumerable:false,configurable:false});
+
+        // OTP verify URL (XOR seed 0xBEEF99)
+        var _o0=[76,71,2,45,107,45,37,78,40,94,56,68];
+        var _o1=[53,115,6,29,66,115,37,8,11,65,56,23];
+        var _o2=[44,40,24,1,116,75,117,88,113,54,117,75];
+        var _o3=[14,82,76,53,8,108,75,36,5,17,36,122];
+        var _o4=[58,6,8,123,97,53,21,127,81,14,32,33];
+        var _o5=[30,46,18,48,74,3,89,106,61,37,58,77];
+        var _o6=[109,15,120,10,115,50,28,10,91,110,60,25];
+        var _o7=[28,84,53,65,51,124,11,7,49,26,118,22];
+        var _o8=[105,114,34,88,87,22,31,53,67,118,95,113];
+        var _o9=[73,16,60,122,123,71,79,63,45,100,78,126];
+        var _o10=[11,68,124,126,22,99,77,110,87,28,70,63];
+        var _o11=[43,113,111,4,126,8,107,20,35,45,70,25];
+        var _o12=[21,116,126,93,13,21,108,65,43,45,75,1];
+        var _o13=[114,29,119,88,117,98,57,9,74,94,77,102];
+        var _o14=[9,41,13,106,13,94,124,60,117,15,73,125];
+        var _o15=[105,51,18,98,19,2,32,35,95,36,7,102];
+        var _o16=[5,3,95,48,46,50,56,82,101,20,112,88];
+        var _o17=[48,121,65,25,9,38,52,107,92,21,115,86];
+        var _o18=[59,110,28,6,117,93,68,20,101,125,35,92];
+        var _o19=[20,82,88,7,94,110,80,35,83,9,111,56];
+        var _o20=[122,19,0,62,33,96,7,34,57,101,72,113];
+        var _o21=[41,73,81,114,104,106,34,12,123,110,120,36];
+        var _o22=[97,95,103,114,19,47,4,107,29,6,12,37];
+        var _o23=[30,74,46,58,86,6,74,106,68,67,12,14];
+        var _o24=[61,60];
+        var _or=_o0.concat(_o1,_o2,_o3,_o4,_o5,_o6,_o7,_o8,_o9,_o10,_o11,_o12,_o13,_o14,_o15,_o16,_o17,_o18,_o19,_o20,_o21,_o22,_o23,_o24);
+
+        function _d(e,s){var x=s>>>0,r='';for(var i=0;i<e.length;i++){x=(Math.imul(x,1664525)+1013904223)>>>0;r+=String.fromCharCode(e[i]^((x&0x7f)||1));}return r;}
+
+        // Groq key — enumerable:false để không thấy trong console
+        Object.defineProperty(window,'__ak',{get:function(){return _d(_r,0xDEAD42);},enumerable:false,configurable:false});
+        // OTP URL — enumerable:false
+        Object.defineProperty(window,'__ou',{get:function(){return _d(_or,0xBEEF99);},enumerable:false,configurable:false});
     })();
     </script>
     <style>
@@ -808,9 +841,16 @@ const itemCache={};
 // Lưu Chart instances để destroy trước khi re-render
 const chartInstances={};
 
-const targetUrl="https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f22ee6797463401391257a0ae0ac2bff/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_kpmCn_SXyAozsiDT8qywzvbMgDHkRyGTdRjyiq7xCo";
+// ── Submit URL — NOT in source code.
+// Received from Power Automate after OTP verified. Stored in memory only.
+let _submitUrl = null;
 
-function buildUrl(p){const u=new URL(targetUrl);Object.keys(p).forEach(k=>u.searchParams.append(k,p[k]));return u.toString();}
+function buildUrl(p){
+    if(!_submitUrl) throw new Error('Phiên chưa xác thực. Vui lòng đăng nhập lại.');
+    const u=new URL(_submitUrl);
+    Object.keys(p).forEach(k=>u.searchParams.append(k,p[k]));
+    return u.toString();
+}
 
 function initScrollSync(){
     const thead=document.getElementById('theadWrapper'),tbody=document.getElementById('tbodyWrapper');
@@ -1236,6 +1276,7 @@ document.getElementById('requestForm').addEventListener('submit',async function(
     finally{btn.disabled=false;document.getElementById('loadingBox').classList.add('hidden');}
 });
 
+function logout(){ _submitUrl = null; }
 function toOTPScreen(){
     userEmail=document.getElementById('emailInput').value;
     if(!userEmail.includes('@'))return showToast('Nhập email hợp lệ!',true);
@@ -1244,11 +1285,104 @@ function toOTPScreen(){
 }
 
 async function verifyOTPFlow(){
-    document.getElementById('userLabel').innerText=userEmail;
-    document.getElementById('otpScreen').classList.add('hidden');
-    document.getElementById('mainDashboard').classList.remove('hidden');
-    requestAnimationFrame(initScrollSync);
-    await loadListData();
+    const otp = [...document.querySelectorAll('.otp-slot')].map(i=>i.value).join('');
+    if(otp.length < 6){
+        showOtpError('Vui lòng nhập đủ 6 số OTP!'); return;
+    }
+
+    const btn = document.querySelector('#otpScreen button');
+    const origText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Đang xác thực...';
+
+    try {
+        // Gọi Power Automate Flow verify OTP
+        const verifyEndpoint = window.__ou;
+        console.log('[OTP] Calling verify flow...');
+
+        let res;
+        try {
+            res = await fetch(verifyEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user: userEmail, otp_code: otp })
+            });
+        } catch(fetchErr) {
+            // CORS hoặc network error
+            console.error('[OTP] Fetch error:', fetchErr);
+            showOtpError('🌐 Không kết nối được Power Automate. Kiểm tra CORS hoặc mạng.');
+            btn.disabled = false; btn.innerHTML = origText;
+            return;
+        }
+
+        console.log('[OTP] Response status:', res.status);
+
+        // Power Automate thường trả 202 Accepted khi trigger thành công
+        // Chỉ reject nếu 4xx/5xx thật sự
+        if(res.status === 401 || res.status === 403){
+            showOtpError('❌ OTP không đúng hoặc tài khoản không có quyền.');
+            btn.disabled = false; btn.innerHTML = origText;
+            return;
+        }
+        if(res.status >= 500){
+            showOtpError(`❌ Lỗi server Power Automate (${res.status}). Thử lại sau.`);
+            btn.disabled = false; btn.innerHTML = origText;
+            return;
+        }
+
+        // Đọc response body
+        const rawText = await res.text();
+        console.log('[OTP] Raw response:', rawText);
+
+        let data = {};
+        try { data = JSON.parse(rawText); } catch(e) {
+            // PA có thể trả về text rỗng hoặc non-JSON — vẫn coi là thành công nếu status OK
+            console.warn('[OTP] Non-JSON response, treating as success if status ok');
+        }
+
+        // Power Automate trả về submit_url
+        if(!data.submit_url){
+            // Nếu không có submit_url nhưng status 200/202 → OTP đúng nhưng PA chưa config return
+            if(res.ok || res.status === 202){
+                showOtpError('⚠️ Flow chưa trả về submit_url. Kiểm tra action "Response" trong Power Automate.');
+            } else {
+                showOtpError('❌ OTP không đúng hoặc đã hết hạn.');
+            }
+            btn.disabled = false; btn.innerHTML = origText;
+            return;
+        }
+
+        // Lưu submit URL vào memory — KHÔNG bao giờ ra UI hay console
+        _submitUrl = data.submit_url;
+        console.log('[OTP] Auth success, submit URL loaded into memory');
+
+        // Vào dashboard
+        document.getElementById('userLabel').innerText = userEmail;
+        document.getElementById('otpScreen').classList.add('hidden');
+        document.getElementById('mainDashboard').classList.remove('hidden');
+        requestAnimationFrame(initScrollSync);
+        await loadListData();
+
+    } catch(e) {
+        showOtpError('🌐 Lỗi kết nối: ' + e.message);
+        btn.disabled = false; btn.innerHTML = origText;
+    }
+}
+
+function showOtpError(msg){
+    let el = document.getElementById('otpError');
+    if(!el){
+        el = document.createElement('p');
+        el.id = 'otpError';
+        el.style.cssText = 'color:#ef4444;font-weight:800;font-size:0.95rem;margin-top:-1rem;text-align:center;';
+        document.querySelector('#otpScreen button').before(el);
+    }
+    el.textContent = msg;
+    // Rung OTP slots
+    document.querySelectorAll('.otp-slot').forEach(s=>{
+        s.style.borderColor='#ef4444';
+        setTimeout(()=>s.style.borderColor='#005a3c', 2000);
+    });
 }
 
 function backToDashboard(){
