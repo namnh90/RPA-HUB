@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPA HUB - Master Integrated System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+    // ── runtime key bootstrap ──
+    (function(){
+        var _α=[94,55,56,73,73,89,99];
+        var _β=[82,91,4,8,38,4,24];
+        var _γ=[9,127,40,38,58,34,106];
+        var _δ=[99,115,52,70,123,15,55];
+        var _ε=[55,3,9,59,8,92,23];
+        var _ζ=[119,127,33,52,28,74,56];
+        var _η=[67,121,17,118,20,93,56];
+        var _θ=[13,54,97,65,82,17,127];
+        var _r=_α.concat(_β,_γ,_δ,_ε,_ζ,_η,_θ);
+        var _s=0xDEAD42;
+        function _d(e){var s=_s>>>0,r='';for(var i=0;i<e.length;i++){s=(Math.imul(s,1664525)+1013904223)>>>0;r+=String.fromCharCode(e[i]^((s&0x7f)||1));}return r;}
+        Object.defineProperty(window,'__ak',{get:function(){return _d(_r);},enumerable:false,configurable:false});
+    })();
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; min-height: 100vh; background-image: url('photos/freepik-export-20240814013012in4i.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; }
+        .premium-glass { background: rgba(255,255,255,0.98); backdrop-filter: blur(30px) saturate(180%); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); }
+        .input-premium { background: rgba(0,0,0,0.06); border: 2px solid rgba(0,0,0,0.1); color: #000; font-weight: 800; transition: all 0.3s ease; }
+        .input-premium:focus { background: #fff; border-color: #005a3c; box-shadow: 0 0 0 4px rgba(0,90,60,0.1); outline: none; }
+        .label-bold { color: #000; font-weight: 800; font-size: 14px; text-transform: uppercase; position: relative; display: block; }
+        .desc-box-full { width: 100%; min-height: 120px; padding: 20px; border-radius: 1.5rem; font-size: 16px; line-height: 1.6; margin-top: 10px; }
+        .tooltip-trigger { position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: help; color: #10b981; }
+        .tooltip-content { visibility: hidden; width: 260px; background-color: #000; color: #fff; text-align: center; border-radius: 8px; padding: 12px; position: absolute; z-index: 50; bottom: 130%; right: 0; opacity: 0; transition: opacity 0.2s; font-size: 12px; font-weight: 500; text-transform: none; pointer-events: none; }
+        .tooltip-trigger:hover .tooltip-content { visibility: visible; opacity: 1; }
+        .btn-vcb { background: #005a3c; transition: all 0.3s ease; color: white; font-weight: 800; }
+        .btn-vcb:hover:not(:disabled) { background: #004a32; transform: translateY(-2px); }
+        .hidden { display: none !important; }
+        .otp-slot { width: 4.5rem; height: 6rem; text-align: center; font-size: 3rem; font-weight: 900; border-radius: 1.5rem; border: 3px solid #005a3c; background: #fff; color: #005a3c; }
+        .custom-check { accent-color: #005a3c; width: 1.5rem; height: 1.5rem; cursor: pointer; }
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid #005a3c; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+        .db-cell-id { font-size: 1.2rem; font-weight: 900; color: #005a3c; }
+        .db-cell-main { font-size: 1.3rem; font-weight: 900; color: #0f172a; }
+        .db-cell-sub { font-size: 1.1rem; font-weight: 700; color: #475569; }
+        .db-header-text th { font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #005a3c; letter-spacing: 0.05em; }
+        .btn-refresh-top { color: #005a3c; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .btn-refresh-top:hover { color: #059669; transform: rotate(180deg) scale(1.1); }
+
+        /* FREEZE HEADER */
+        #mainDashboard { height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem; }
+        .dashboard-card { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+        #theadWrapper { flex-shrink: 0; overflow-x: hidden; overflow-y: hidden; background: #f8fafc; border-bottom: 4px solid #005a3c; }
+        #theadWrapper table { min-width: 1800px; width: 100%; border-collapse: collapse; table-layout: fixed; }
+        #tbodyWrapper { flex: 1; min-height: 0; overflow-x: auto; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #005a3c #f1f5f9; }
+        #tbodyWrapper::-webkit-scrollbar { width: 8px; height: 8px; }
+        #tbodyWrapper::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 99px; }
+        #tbodyWrapper::-webkit-scrollbar-thumb { background: #005a3c; border-radius: 99px; }
+        #tbodyWrapper::-webkit-scrollbar-corner { background: #f1f5f9; }
+        #tbodyWrapper table { min-width: 1800px; width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .col-id{width:80px}.col-ma{width:130px}.col-ten{width:260px}.col-donvi{width:160px}.col-tailiieu{width:200px}.col-createdat{width:190px}.col-createdby{width:190px}.col-modat{width:190px}.col-modby{width:190px}.col-action{width:130px}
+
+        /* CHART SCREEN */
+        #chartScreen { height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem; overflow: hidden; }
+        #chart-body { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #005a3c #f1f5f9; padding-bottom: 1.5rem; }
+        #chart-body::-webkit-scrollbar { width: 8px; }
+        #chart-body::-webkit-scrollbar-thumb { background: #005a3c; border-radius: 99px; }
+
+        .chart-card { background: #fff; border-radius: 2rem; padding: 2rem 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid #f1f5f9; }
+        .chart-card h3 { font-size: 1.1rem; font-weight: 800; color: #005a3c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; }
+
+        /* Stat KPI cards */
+        .kpi-card { border-radius: 2rem; padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .kpi-num { font-size: 3rem; font-weight: 900; line-height: 1; }
+        .kpi-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; }
+
+        /* Active nav button */
+        .nav-btn-active { background: rgba(255,255,255,0.2) !important; }
+
+        /* ===== FILTER PANEL ===== */
+        #filterPanel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        #filterPanel.open {
+            max-height: 320px;
+            opacity: 1;
+        }
+        .filter-input {
+            background: rgba(0,0,0,0.04);
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #0f172a;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .filter-input:focus { border-color: #005a3c; box-shadow: 0 0 0 3px rgba(0,90,60,0.1); }
+        .filter-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 6px; display: block; }
+        .filter-chip { display: inline-flex; align-items: center; gap: 5px; background: #e8f5ef; color: #005a3c; border-radius: 999px; padding: 3px 12px 3px 10px; font-size: 0.78rem; font-weight: 800; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; user-select: none; }
+        .filter-chip:hover { border-color: #005a3c; }
+        .filter-chip.active { background: #005a3c; color: #fff; }
+        .filter-chip.risk-thap.active { background: #10b981; }
+        .filter-chip.risk-trung.active { background: #f59e0b; }
+        .filter-chip.risk-cao.active { background: #ef4444; }
+        #filterResultBadge { display: none; font-size: 0.78rem; font-weight: 900; background: #005a3c; color: #fff; padding: 3px 12px; border-radius: 999px; margin-left: 10px; }
+        .filter-btn-toggle { transition: transform 0.3s ease; }
+        .filter-btn-toggle.open { transform: rotate(180deg); }
+
+        /* ===== AI AGENT SCREEN ===== */
+        #aiScreen { height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem; }
+
+        #ai-card { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 2.5rem; }
+
+        /* API key bar */
+        #apiKeyBar { flex-shrink: 0; background: #f8fafc; border-bottom: 2px solid #e2e8f0; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+        #apiKeyInput { flex: 1; background: #fff; border: 2px solid #e2e8f0; border-radius: 1rem; padding: 10px 16px; font-size: 0.88rem; font-weight: 700; color: #0f172a; font-family: monospace; outline: none; transition: border-color 0.2s; }
+        #apiKeyInput:focus { border-color: #005a3c; }
+        #apiKeyInput::placeholder { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: #94a3b8; }
+        #keyStatus { font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
+        .key-ok { background: #dcfce7; color: #15803d; }
+        .key-no { background: #fee2e2; color: #dc2626; }
+
+        /* Suggested questions */
+        #suggestBar { flex-shrink: 0; padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 2px solid #f1f5f9; background: #fafafa; }
+        .suggest-chip { font-size: 0.78rem; font-weight: 800; background: #fff; border: 2px solid #e2e8f0; color: #475569; padding: 6px 14px; border-radius: 999px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+        .suggest-chip:hover { border-color: #005a3c; color: #005a3c; background: #e8f5ef; }
+
+        /* Chat messages */
+        #chatMessages { flex: 1; min-height: 0; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; scrollbar-width: thin; scrollbar-color: #005a3c #f1f5f9; }
+        #chatMessages::-webkit-scrollbar { width: 6px; }
+        #chatMessages::-webkit-scrollbar-thumb { background: #005a3c; border-radius: 99px; }
+
+        .msg-user { display: flex; justify-content: flex-end; }
+        .msg-user .bubble { background: #005a3c; color: #fff; border-radius: 1.5rem 1.5rem 0.3rem 1.5rem; padding: 14px 20px; max-width: 70%; font-size: 0.95rem; font-weight: 700; line-height: 1.6; }
+
+        .msg-ai { display: flex; gap: 12px; align-items: flex-start; }
+        .ai-avatar { width: 40px; height: 40px; background: linear-gradient(135deg,#005a3c,#00895c); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+        .msg-ai .bubble { background: #fff; border: 2px solid #e8f5ef; color: #0f172a; border-radius: 0.3rem 1.5rem 1.5rem 1.5rem; padding: 14px 20px; max-width: 80%; font-size: 0.95rem; font-weight: 600; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .msg-ai .bubble strong { color: #005a3c; }
+        .msg-ai .bubble ul { margin: 8px 0 0 18px; }
+        .msg-ai .bubble li { margin-bottom: 4px; }
+        .msg-ai .bubble .tool-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 800; background: #e8f5ef; color: #005a3c; padding: 3px 10px; border-radius: 999px; margin-bottom: 10px; }
+
+        /* Typing indicator */
+        .typing-dot { width: 8px; height: 8px; background: #005a3c; border-radius: 50%; display: inline-block; animation: typingBounce 1.2s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
+
+        /* Input bar */
+        #chatInputBar { flex-shrink: 0; padding: 16px 20px; background: #fff; border-top: 2px solid #f1f5f9; display: flex; gap: 12px; align-items: flex-end; }
+        #chatInput { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 1.5rem; padding: 12px 20px; font-size: 0.95rem; font-weight: 700; color: #0f172a; resize: none; min-height: 48px; max-height: 160px; outline: none; transition: border-color 0.2s; line-height: 1.5; font-family: 'Plus Jakarta Sans', sans-serif; }
+        #chatInput:focus { border-color: #005a3c; }
+        #btnSendChat { background: #005a3c; color: #fff; border: none; border-radius: 1.2rem; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+        #btnSendChat:hover:not(:disabled) { background: #004a32; transform: scale(1.05); }
+        #btnSendChat:disabled { background: #94a3b8; cursor: not-allowed; }
+        #btnClearChat { background: #fff; color: #94a3b8; border: 2px solid #e2e8f0; border-radius: 1.2rem; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+        #btnClearChat:hover { border-color: #ef4444; color: #ef4444; }
+
+        /* Welcome screen inside chat */
+        #chatWelcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px; opacity: 0.85; }
+        #chatWelcome .gemini-badge { background: linear-gradient(135deg,#4285f4,#34a853,#fbbc04,#ea4335); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1rem; font-weight: 900; }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="flex-grow flex items-center justify-center p-4">
+    <div class="max-w-md w-full premium-glass rounded-[3.5rem] p-12 text-center space-y-10 shadow-2xl">
+        <img src="photos/logo-vietcombank-vector-1.png" alt="Logo" class="w-48 mx-auto">
+        <h2 class="text-3xl font-900 text-[#005a3c] uppercase tracking-tight">RPA Hub Access</h2>
+        <div class="space-y-5 text-left">
+            <label class="label-bold ml-2">Email nhân viên</label>
+            <input type="email" id="emailInput" placeholder="name@vietcombank.com.vn" class="w-full px-7 py-5 rounded-2xl input-premium text-lg">
+            <button onclick="toOTPScreen()" class="w-full py-5 btn-vcb rounded-2xl font-black uppercase tracking-widest shadow-lg text-xl">NHẬN MÃ XÁC THỰC</button>
+        </div>
+    </div>
+</div>
+
+<!-- OTP -->
+<div id="otpScreen" class="hidden flex-grow flex items-center justify-center p-4">
+    <div class="max-w-lg w-full premium-glass rounded-[3.5rem] p-14 text-center space-y-12 shadow-2xl">
+        <div class="bg-white w-32 h-32 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-xl border-4 border-emerald-50">
+            <i data-lucide="shield-check" class="w-20 h-20 text-[#005a3c]"></i>
+        </div>
+        <div class="space-y-3">
+            <h2 class="text-4xl font-900 text-[#005a3c] uppercase tracking-tighter">Xác thực bảo mật</h2>
+            <p class="text-slate-500 font-bold text-lg">Vui lòng kiểm tra mã OTP trong Email</p>
+        </div>
+        <div class="flex justify-center gap-4">
+            <input type="text" maxlength="1" class="otp-slot"><input type="text" maxlength="1" class="otp-slot">
+            <input type="text" maxlength="1" class="otp-slot"><input type="text" maxlength="1" class="otp-slot">
+            <input type="text" maxlength="1" class="otp-slot"><input type="text" maxlength="1" class="otp-slot">
+        </div>
+        <button onclick="verifyOTPFlow()" class="w-full py-7 btn-vcb rounded-[2rem] font-black uppercase shadow-2xl text-2xl hover:scale-105 transition-all">TRUY CẬP HỆ THỐNG</button>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="mainDashboard" class="hidden">
+    <header class="premium-glass px-10 py-6 rounded-[3rem] flex justify-between items-center shadow-xl border-b-8 border-[#005a3c] flex-shrink-0">
+        <div class="flex items-center gap-8">
+            <img src="photos/logo-vietcombank-vector-1.png" alt="Logo" class="w-44">
+            <div class="h-14 w-1.5 bg-slate-200 rounded-full"></div>
+            <span class="text-3xl font-900 text-[#005a3c] uppercase tracking-tighter">RPA HUB CENTRAL</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="openAiScreen()"
+                class="px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 text-xl border-4 border-purple-400 text-purple-600 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all">
+                <i data-lucide="bot" class="w-8 h-8"></i> AI AGENT
+            </button>
+            <button onclick="openChartScreen()"
+                class="px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 text-xl border-4 border-[#005a3c] text-[#005a3c] hover:bg-[#005a3c] hover:text-white transition-all">
+                <i data-lucide="bar-chart-2" class="w-8 h-8"></i> CHART
+            </button>
+            <button onclick="openForm('new')"
+                class="btn-vcb px-10 py-5 rounded-[2rem] font-black flex items-center gap-4 shadow-2xl text-xl">
+                <i data-lucide="plus-square" class="w-8 h-8"></i> ĐĂNG KÝ MỚI
+            </button>
+        </div>
+    </header>
+
+    <div class="dashboard-card premium-glass rounded-[3rem] shadow-2xl">
+        <!-- Title bar -->
+        <div class="flex items-center justify-between px-10 py-5 flex-shrink-0 border-b-2 border-slate-100">
+            <div class="flex items-center gap-4">
+                <i data-lucide="table-properties" class="w-10 h-10 text-[#005a3c]"></i>
+                <h2 class="text-4xl font-900 text-slate-800 uppercase tracking-tighter italic">Danh sách quy trình</h2>
+                <span id="filterResultBadge"></span>
+            </div>
+            <div class="flex items-center gap-3">
+                <!-- Toggle filter button -->
+                <button onclick="toggleFilterPanel()" id="btnToggleFilter"
+                    class="flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-sm uppercase tracking-widest border-2 border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-all">
+                    <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+                    BỘ LỌC
+                    <i data-lucide="chevron-down" class="w-4 h-4 filter-btn-toggle" id="filterChevron"></i>
+                </button>
+                <button onclick="loadListData()" class="btn-refresh-top bg-emerald-50 p-4 rounded-full shadow-inner border-2 border-emerald-100">
+                    <i data-lucide="refresh-cw" class="w-9 h-9"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Panel (toggle) -->
+        <div id="filterPanel" class="flex-shrink-0 border-b-2 border-slate-100 overflow-hidden">
+            <div class="px-10 py-6 grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+
+                <!-- Tên quy trình -->
+                <div>
+                    <span class="filter-label">🔍 Tên quy trình</span>
+                    <input type="text" id="fTen" class="filter-input" placeholder="Nhập từ khóa..."
+                        oninput="applyFilters()">
+                </div>
+
+                <!-- Đơn vị -->
+                <div>
+                    <span class="filter-label">🏢 Đơn vị đề xuất</span>
+                    <input type="text" id="fDonVi" class="filter-input" placeholder="Nhập đơn vị..."
+                        oninput="applyFilters()">
+                </div>
+
+                <!-- Mức độ rủi ro -->
+                <div>
+                    <span class="filter-label">⚠️ Mức độ rủi ro</span>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="filter-chip risk-thap" onclick="toggleChip(this,'fRuiRo','Thấp')">Thấp</span>
+                        <span class="filter-chip risk-trung" onclick="toggleChip(this,'fRuiRo','Trung bình')">Trung bình</span>
+                        <span class="filter-chip risk-cao" onclick="toggleChip(this,'fRuiRo','Cao')">Cao</span>
+                    </div>
+                    <input type="hidden" id="fRuiRo" value="">
+                </div>
+
+                <!-- Tần suất -->
+                <div>
+                    <span class="filter-label">🔁 Tần suất sử dụng</span>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Hàng ngày')">Hàng ngày</span>
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Hàng tuần')">Hàng tuần</span>
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Hàng tháng')">Hàng tháng</span>
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Hàng quý')">Hàng quý</span>
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Hàng năm')">Hàng năm</span>
+                        <span class="filter-chip" onclick="toggleChip(this,'fTanSuat','Theo phát sinh')">Phát sinh</span>
+                    </div>
+                    <input type="hidden" id="fTanSuat" value="">
+                </div>
+
+            </div>
+
+            <!-- Clear filter row -->
+            <div class="px-10 pb-4 flex items-center gap-3">
+                <button onclick="clearFilters()"
+                    class="flex items-center gap-2 text-sm font-black text-red-400 hover:text-red-600 transition-all uppercase tracking-widest">
+                    <i data-lucide="x-circle" class="w-4 h-4"></i> Xóa bộ lọc
+                </button>
+                <span id="filterSummary" class="text-xs font-bold text-slate-400 italic"></span>
+            </div>
+        </div>
+
+        <div id="theadWrapper">
+            <table>
+                <colgroup>
+                    <col class="col-id"><col class="col-ma"><col class="col-ten"><col class="col-donvi">
+                    <col class="col-tailiieu"><col class="col-createdat"><col class="col-createdby">
+                    <col class="col-modat"><col class="col-modby"><col class="col-action">
+                </colgroup>
+                <thead>
+                    <tr class="db-header-text">
+                        <th class="px-6 py-5 text-left">ID</th>
+                        <th class="px-6 py-5 text-left">Mã QT</th>
+                        <th class="px-6 py-5 text-left">Tên Quy Trình</th>
+                        <th class="px-6 py-5 text-left">Đơn Vị</th>
+                        <th class="px-6 py-5 text-left">Tài Liệu</th>
+                        <th class="px-6 py-5 text-left">🕐 Tạo lúc</th>
+                        <th class="px-6 py-5 text-left">👤 Tạo bởi</th>
+                        <th class="px-6 py-5 text-left">✏️ Sửa lúc</th>
+                        <th class="px-6 py-5 text-left">👤 Sửa bởi</th>
+                        <th class="px-6 py-5 text-right">Thao Tác</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div id="loadingTable" class="hidden text-center py-24 flex-shrink-0">
+            <div class="loader mx-auto"></div>
+            <p class="mt-8 text-3xl font-black text-emerald-800 animate-pulse tracking-widest uppercase">Đang đồng bộ...</p>
+        </div>
+
+        <div id="tbodyWrapper">
+            <table>
+                <colgroup>
+                    <col class="col-id"><col class="col-ma"><col class="col-ten"><col class="col-donvi">
+                    <col class="col-tailiieu"><col class="col-createdat"><col class="col-createdby">
+                    <col class="col-modat"><col class="col-modby"><col class="col-action">
+                </colgroup>
+                <tbody id="dataTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== CHART SCREEN ===================== -->
+<div id="chartScreen" class="hidden">
+
+    <!-- Header -->
+    <header class="premium-glass px-10 py-6 rounded-[3rem] flex justify-between items-center shadow-xl border-b-8 border-[#005a3c] flex-shrink-0">
+        <div class="flex items-center gap-8">
+            <img src="photos/logo-vietcombank-vector-1.png" alt="Logo" class="w-44">
+            <div class="h-14 w-1.5 bg-slate-200 rounded-full"></div>
+            <div class="flex items-center gap-3">
+                <i data-lucide="bar-chart-2" class="w-10 h-10 text-[#005a3c]"></i>
+                <span class="text-3xl font-900 text-[#005a3c] uppercase tracking-tighter">THỐNG KÊ & PHÂN TÍCH</span>
+            </div>
+        </div>
+        <button onclick="backToDashboardFromChart()"
+            class="px-10 py-5 border-4 border-slate-200 rounded-[2rem] font-black text-slate-500 hover:text-[#005a3c] hover:border-[#005a3c] transition-all text-xl flex items-center gap-3">
+            <i data-lucide="arrow-left" class="w-7 h-7"></i> QUAY LẠI
+        </button>
+    </header>
+
+    <!-- Chart body — scrollable -->
+    <div id="chart-body">
+
+        <!-- KPI Row -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="kpi-card" style="background:linear-gradient(135deg,#005a3c,#00895c);">
+                <div class="kpi-num text-white" id="kpi-total">—</div>
+                <div class="kpi-label text-white">Tổng quy trình</div>
+            </div>
+            <div class="kpi-card" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">
+                <div class="kpi-num text-white" id="kpi-donvi">—</div>
+                <div class="kpi-label text-white">Đơn vị đề xuất</div>
+            </div>
+            <div class="kpi-card" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+                <div class="kpi-num text-white" id="kpi-cao">—</div>
+                <div class="kpi-label text-white">Rủi ro cao</div>
+            </div>
+            <div class="kpi-card" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
+                <div class="kpi-num text-white" id="kpi-daily">—</div>
+                <div class="kpi-label text-white">QT hàng ngày</div>
+            </div>
+        </div>
+
+        <!-- Row 1: Bar đơn vị + Donut rủi ro -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="chart-card">
+                <h3><span>🏢</span> Số quy trình theo Đơn vị</h3>
+                <div style="position:relative; height:320px;">
+                    <canvas id="chartDonVi"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><span>⚠️</span> Phân bổ Mức độ rủi ro</h3>
+                <div style="position:relative; height:320px;">
+                    <canvas id="chartRuiRo"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Bar tần suất + Donut phạm vi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="chart-card">
+                <h3><span>🔁</span> Tần suất sử dụng</h3>
+                <div style="position:relative; height:300px;">
+                    <canvas id="chartTanSuat"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><span>🌐</span> Phạm vi sử dụng</h3>
+                <div style="position:relative; height:300px;">
+                    <canvas id="chartPhamVi"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Horizontal bar nguồn lực + Donut mục đích -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="chart-card">
+                <h3><span>👥</span> Nguồn lực triển khai đề xuất</h3>
+                <div style="position:relative; height:260px;">
+                    <canvas id="chartNguonLuc"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><span>🎯</span> Mục đích sử dụng BOT</h3>
+                <div style="position:relative; height:260px;">
+                    <canvas id="chartMucDich"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===================== AI AGENT SCREEN ===================== -->
+<div id="aiScreen" class="hidden">
+
+    <!-- Header -->
+    <header class="premium-glass px-10 py-5 rounded-[3rem] flex justify-between items-center shadow-xl border-b-8 border-purple-500 flex-shrink-0">
+        <div class="flex items-center gap-8">
+            <img src="photos/logo-vietcombank-vector-1.png" alt="Logo" class="w-44">
+            <div class="h-14 w-1.5 bg-slate-200 rounded-full"></div>
+            <div class="flex items-center gap-3">
+                <i data-lucide="bot" class="w-10 h-10 text-purple-600"></i>
+                <div>
+                    <span class="text-3xl font-900 text-purple-700 uppercase tracking-tighter">RPA AI AGENT</span>
+                    <p class="text-xs font-800 text-slate-400 uppercase tracking-widest mt-0.5">Powered by Groq · Qwen3-32B</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="backToDashboardFromAi()"
+            class="px-10 py-5 border-4 border-slate-200 rounded-[2rem] font-black text-slate-500 hover:text-purple-600 hover:border-purple-400 transition-all text-xl flex items-center gap-3">
+            <i data-lucide="arrow-left" class="w-7 h-7"></i> QUAY LẠI
+        </button>
+    </header>
+
+    <!-- Chat card -->
+    <div id="ai-card" class="premium-glass shadow-2xl">
+
+        <!-- API Key bar — key ẩn, chỉ hiện status -->
+        <div id="apiKeyBar">
+            <i data-lucide="shield-check" class="w-5 h-5 text-slate-400 flex-shrink-0"></i>
+            <span class="text-xs font-800 text-slate-400 uppercase tracking-widest whitespace-nowrap">Groq API:</span>
+            <span id="keyStatus" class="key-ok">✓ Đã kết nối</span>
+            <select id="modelSelect" onchange="onModelChange()"
+                style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:0.75rem;padding:8px 12px;font-size:0.8rem;font-weight:800;color:#0f172a;outline:none;cursor:pointer;flex-shrink:0;">
+                <option value="qwen/qwen3-32b">⭐ Qwen3-32B (Tốt nhất)</option>
+                <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
+                <option value="llama3-70b-8192">Llama 3 70B</option>
+                <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                <option value="llama3-8b-8192">Llama 3 8B (Nhanh)</option>
+            </select>
+            <div style="flex:1;"></div>
+            <span id="modelBadge" style="font-size:0.72rem;font-weight:800;color:#7c3aed;background:#f3e8ff;padding:4px 12px;border-radius:999px;white-space:nowrap;">qwen/qwen3-32b</span>
+        </div>
+
+
+        <!-- Suggested questions -->
+        <div id="suggestBar">
+            <span class="text-xs font-800 text-slate-400 uppercase tracking-widest self-center whitespace-nowrap">Gợi ý:</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">📊 Thống kê tổng quan toàn bộ quy trình</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">⚠️ Những QT có rủi ro cao là gì?</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">🏆 Đơn vị nào đăng ký nhiều nhất?</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">🤖 Quy trình nào phù hợp triển khai RPA nhất?</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">📅 QT nào chạy hàng ngày và rủi ro thấp?</span>
+            <span class="suggest-chip" onclick="sendSuggest(this)">💡 Tư vấn ưu tiên triển khai bot</span>
+        </div>
+
+        <!-- Messages -->
+        <div id="chatMessages">
+            <!-- Welcome -->
+            <div id="chatWelcome">
+                <div style="font-size:4rem;">🤖</div>
+                <h3 style="font-size:1.4rem;font-weight:900;color:#7c3aed;">RPA Hub AI Agent</h3>
+                <p style="font-size:0.95rem;font-weight:700;color:#64748b;text-align:center;max-width:480px;line-height:1.7;">
+                    Tôi có thể giúp bạn <strong>tìm kiếm quy trình</strong>, <strong>thống kê dữ liệu</strong>,
+                    <strong>đánh giá độ phù hợp RPA</strong> và <strong>gợi ý ưu tiên triển khai</strong>.
+                    <br>Bắt đầu hỏi ngay!
+                </p>
+                <span class="gemini-badge">✦ Powered by Groq · Qwen3-32B</span>
+            </div>
+        </div>
+
+        <!-- Input bar -->
+        <div id="chatInputBar">
+            <textarea id="chatInput" rows="1" placeholder="Hỏi bất cứ điều gì về dữ liệu RPA Hub..."
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+                oninput="autoResizeTextarea(this)"></textarea>
+            <button id="btnClearChat" onclick="clearChat()" title="Xóa lịch sử chat">
+                <i data-lucide="trash-2" class="w-5 h-5"></i>
+            </button>
+            <button id="btnSendChat" onclick="sendChat()" title="Gửi (Enter)">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- FORM SCREEN -->
+<div id="formScreen" class="hidden flex-grow flex flex-col">
+    <header class="premium-glass sticky top-0 z-50 m-4 rounded-[3rem] shadow-xl">
+        <div class="max-w-7xl mx-auto px-12 h-24 flex justify-between items-center">
+            <div class="flex items-center gap-8">
+                <img src="photos/logo-vietcombank-vector-1.png" alt="Logo" class="w-40">
+                <span class="text-3xl font-900 text-[#005a3c] tracking-tighter">RPA REGISTRATION</span>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="text-right">
+                    <p id="userLabel" class="text-xl font-900 text-slate-800"></p>
+                    <p id="modeBadge" class="text-[10px] font-black uppercase italic tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full border border-emerald-200 text-emerald-600">NEW MODE</p>
+                </div>
+                <button onclick="backToDashboard()" class="px-10 py-3 border-4 border-slate-100 rounded-3xl font-black text-slate-400 hover:text-red-500 hover:border-red-100 transition-all uppercase text-sm">Quay lại Dashboard</button>
+            </div>
+        </div>
+    </header>
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="max-w-7xl w-full premium-glass rounded-[5.5rem] p-20 md:p-28 shadow-2xl">
+            <form id="requestForm" class="space-y-24">
+                <!-- STEP A -->
+                <div id="stepA" class="space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">A. THÔNG TIN CHUNG</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-14">
+                        <div class="space-y-3"><label class="label-bold">Mã quy trình/ công việc</label><input type="text" data-field="A_Ma" placeholder="(RPA CoE điền)" class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-3"><label class="label-bold">Tên quy trình/ công việc *</label><input type="text" data-field="A_Ten" required class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-3"><label class="label-bold">Đơn vị đề xuất *</label><input type="text" data-field="A_DonViDeXuat" required class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-3"><label class="label-bold pr-10">Đơn vị ban hành quy trình <span class="tooltip-trigger"><i data-lucide="help-circle" class="w-6 h-6"></i><span class="tooltip-content">Tên đơn vị ban hành quy trình nghiệp vụ đang áp dụng</span></span></label><input type="text" data-field="A_DonViBanHanh" class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-3"><label class="label-bold">Ngày đăng ký *</label><input type="date" data-field="A_NgayDangKy" required class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-3"><label class="label-bold">RPA Champion/ Nghiệp vụ *</label><input type="text" data-field="A_Champion" required class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                    </div>
+                    <div class="space-y-5"><label class="label-bold text-3xl uppercase tracking-tighter">Mô tả tóm tắt quy trình/ công việc *</label><textarea data-field="A_MoTa" class="input-premium desc-box-full resize-none !min-h-[250px] text-xl" required placeholder="Ghi chi tiết các bước nghiệp vụ hiện tại..."></textarea></div>
+                    <div class="flex justify-end"><button type="button" onclick="showStep('B')" class="px-28 py-9 btn-vcb rounded-[3.5rem] font-black uppercase text-2xl shadow-2xl hover:scale-105 transition-all">TIẾP THEO (MỤC B) <i data-lucide="arrow-right-circle" class="inline w-10 h-10 ml-4"></i></button></div>
+                </div>
+                <!-- STEP B -->
+                <div id="stepB" class="hidden space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">B. CHI TIẾT HIỆN TRẠNG QUY TRÌNH</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-28 gap-y-14">
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Mục đích sử dụng</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer hover:text-[#005a3c]"><input type="checkbox" data-group="B_MucDich" value="Tác nghiệp cá nhân" class="custom-check"> Hỗ trợ tác nghiệp cá nhân</label><label class="flex items-center gap-5 cursor-pointer hover:text-[#005a3c]"><input type="checkbox" data-group="B_MucDich" value="Thay thế quy mô lớn" class="custom-check"> Thay thế/quy mô lớn</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Phạm vi sử dụng/tác nghiệp</label><div class="grid grid-cols-1 gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="B_PhamVi" value="Nội bộ" class="custom-check"> Nội bộ đơn vị</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="B_PhamVi" value="Liên phòng" class="custom-check"> Liên phòng ban</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="B_PhamVi" value="Toàn hệ thống" class="custom-check"> Toàn hệ thống</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Mức độ rủi ro</label><div class="flex gap-12 font-extrabold text-xl"><label class="flex items-center gap-4 cursor-pointer"><input type="radio" name="risk" value="Thấp" class="custom-check"> Thấp</label><label class="flex items-center gap-4 cursor-pointer"><input type="radio" name="risk" value="Trung bình" class="custom-check"> Trung bình</label><label class="flex items-center gap-4 cursor-pointer"><input type="radio" name="risk" value="Cao" class="custom-check"> Cao</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Yêu cầu giám sát & mở rộng</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="B_GiamSat" value="Thấp" class="custom-check"> Thấp</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="B_GiamSat" value="24/7" class="custom-check"> Cần giám sát/vận hành 24/7</label></div></div>
+                        <div class="space-y-5"><label class="label-bold text-xl uppercase">Số lượng Nhân sự (FTE) hiện tại</label><input type="number" step="0.1" data-field="B_FTE" class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-5"><label class="label-bold text-xl uppercase">Số lượng giao dịch theo tần suất</label><input type="number" data-field="B_SLGD" class="w-full px-8 py-5 rounded-3xl input-premium text-xl"></div>
+                        <div class="space-y-5 col-span-full"><label class="label-bold text-xl uppercase tracking-widest">Thời gian thực hiện/ giao dịch (HH:MM:SS)</label><input type="text" id="timeInput" data-field="B_ThoiGian" maxlength="8" placeholder="00:00:00" class="w-full px-10 py-8 rounded-[2rem] input-premium text-4xl font-black text-center tracking-[0.2em] font-mono"></div>
+                    </div>
+                    <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Tần suất sử dụng quy trình / công việc</label><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 font-black text-lg"><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Hàng ngày" class="custom-check"> Hàng ngày</label><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Hàng tuần" class="custom-check"> Hàng tuần</label><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Hàng tháng" class="custom-check"> Hàng tháng</label><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Hàng quý" class="custom-check"> Hàng quý</label><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Hàng năm" class="custom-check"> Hàng năm</label><label class="flex items-center gap-4 cursor-pointer"><input type="checkbox" data-group="B_TanSuat" value="Theo phát sinh" class="custom-check"> Theo phát sinh</label></div></div>
+                    <div class="space-y-10"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Danh sách ứng dụng sử dụng trong quy trình</label><div class="space-y-8"><div class="space-y-3"><label class="text-md font-black text-slate-400 uppercase tracking-widest">+ Hệ thống nội bộ Vietcombank:</label><textarea data-field="B_App_VCB" class="input-premium desc-box-full text-xl" placeholder="Liệt kê tên các phần mềm VCB..."></textarea></div><div class="space-y-3"><label class="text-md font-black text-slate-400 uppercase tracking-widest">+ Các hệ thống khác:</label><textarea data-field="B_App_Khac" class="input-premium desc-box-full text-xl" placeholder="Liệt kê tên ứng dụng ngoài..."></textarea></div></div></div>
+                    <div class="flex justify-between pt-10"><button type="button" onclick="showStep('A')" class="px-20 py-7 border-4 border-slate-100 text-slate-400 rounded-3xl font-black uppercase text-xl">QUAY LẠI</button><button type="button" onclick="showStep('C')" class="px-28 py-9 btn-vcb rounded-[3.5rem] font-black uppercase text-2xl shadow-2xl hover:scale-105 transition-all">TIẾP THEO (MỤC C)</button></div>
+                </div>
+                <!-- STEP C -->
+                <div id="stepC" class="hidden space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">C. DỮ LIỆU VÀ TÀI LIỆU ĐẦU VÀO</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-28">
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Loại dữ liệu đầu vào</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Loai" value="Số hóa" class="custom-check"> Dữ liệu số hóa</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Loai" value="Có cấu trúc" class="custom-check"> Dữ liệu có cấu trúc</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Loai" value="Ảnh/PDF" class="custom-check"> File ảnh/PDF</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Loai" value="Scan" class="custom-check"> Dữ liệu scan</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Nguồn dữ liệu đầu vào</label><div class="flex flex-col gap-8 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Nguon" value="Hệ thống" class="custom-check"> Từ hệ thống</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Nguon" value="Word/Excel" class="custom-check"> File Word/Excel</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Nguon" value="Email" class="custom-check"> Email</label><div class="space-y-4"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="C_Nguon" value="Khác" class="custom-check"> Khác: (Mô tả)</label><textarea data-field="C_Nguon_Khac" class="input-premium desc-box-full text-xl" style="min-height:100px;" placeholder="Mô tả nguồn dữ liệu khác..."></textarea></div></div></div>
+                    </div>
+                    <div class="space-y-12"><div class="space-y-4"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase tracking-tight">Có tác vụ gửi thông tin ra ngoài VCB không?</label><textarea data-field="C_GuiRaNgoai" class="input-premium desc-box-full text-xl" placeholder="Mô tả chi tiết tác vụ gửi dữ liệu ra ngoài..."></textarea></div><div class="space-y-4"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase tracking-tight">Đề xuất cải tiến quy trình hiện tại?</label><textarea data-field="C_CaiTien" class="input-premium desc-box-full text-xl" placeholder="Các bước có thể tối ưu hóa..."></textarea></div></div>
+                    <div class="flex justify-between pt-10"><button type="button" onclick="showStep('B')" class="px-20 py-7 border-4 border-slate-100 text-slate-400 rounded-3xl font-black uppercase text-xl">QUAY LẠI</button><button type="button" onclick="showStep('D')" class="px-28 py-9 btn-vcb rounded-[3.5rem] font-black uppercase text-2xl shadow-2xl hover:scale-105 transition-all">TIẾP THEO (MỤC D)</button></div>
+                </div>
+                <!-- STEP D -->
+                <div id="stepD" class="hidden space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">D. THÔNG TIN BỔ SUNG</h3>
+                    <div class="space-y-12">
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Quy trình dự kiến thay đổi trong 6 tháng tới không?</label><div class="flex gap-14 font-black text-2xl mb-8"><label class="flex items-center gap-5 cursor-pointer"><input type="radio" name="d-dq" value="Không" class="custom-check"> KHÔNG</label><label class="flex items-center gap-5 cursor-pointer"><input type="radio" name="d-dq" value="Có" class="custom-check"> CÓ</label></div><textarea data-field="D_MoTaThayDoi" class="input-premium desc-box-full text-xl" placeholder="Nếu có, vui lòng mô tả dự kiến thay đổi..."></textarea></div>
+                        <div class="space-y-4"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Hệ thống liên quan dự kiến thay đổi trong 6 tháng?</label><textarea data-field="D_ThayDoiHeThong" class="input-premium desc-box-full text-xl" placeholder="Ví dụ: Nâng cấp Core, nâng cấp App..."></textarea></div>
+                        <div class="space-y-4"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Các lưu ý khác (nếu có)</label><textarea data-field="D_LuuY" class="input-premium desc-box-full text-xl"></textarea></div>
+                        <div class="pt-16 border-t-8 border-slate-50 grid grid-cols-1 md:grid-cols-2 gap-20">
+                            <div class="space-y-8"><label class="label-bold text-[#005a3c] flex items-center gap-4 text-2xl"><i data-lucide="cloud-check" class="w-10 h-10"></i> FILE TRÊN HỆ THỐNG</label><div id="oldFileList" class="space-y-5 min-h-[200px] p-10 bg-slate-50/50 rounded-[4rem] border-4 border-dashed border-slate-100 shadow-inner"></div></div>
+                            <div class="space-y-8"><label class="label-bold text-blue-800 flex items-center gap-4 text-2xl"><i data-lucide="plus-square" class="w-10 h-10"></i> ĐÍNH KÈM FILE MỚI</label><label class="flex flex-col items-center justify-center border-4 border-dashed border-slate-200 rounded-[4rem] p-14 hover:border-emerald-500 cursor-pointer bg-white group transition-all shadow-sm"><i data-lucide="upload-cloud" class="w-20 h-20 text-emerald-600 mb-5 group-hover:scale-110 transition-transform duration-300"></i><span class="text-md font-black text-slate-500 uppercase tracking-widest text-center">NHẤP ĐỂ TẢI FILE MỚI</span><input type="file" id="fInput" class="hidden" multiple onchange="handleFiles(this.files)"></label><div id="newFileList" class="mt-8 space-y-5"></div></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between pt-10"><button type="button" onclick="showStep('C')" class="px-20 py-7 border-4 border-slate-100 text-slate-400 rounded-3xl font-black uppercase text-xl">QUAY LẠI</button><button type="button" onclick="showStep('E')" class="px-28 py-9 btn-vcb rounded-[3.5rem] font-black uppercase text-2xl shadow-2xl hover:scale-105 transition-all">TIẾP THEO (MỤC E)</button></div>
+                </div>
+                <!-- STEP E -->
+                <div id="stepE" class="hidden space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">E. ĐỀ XUẤT CỦA ĐƠN VỊ</h3>
+                    <div class="space-y-12"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Nguồn lực triển khai</label><div class="grid grid-cols-1 md:grid-cols-3 gap-10"><label class="flex items-center gap-5 cursor-pointer font-black text-xl text-slate-700"><input type="checkbox" data-group="E_NguonLuc" value="Nội bộ" class="custom-check"> NỘI BỘ ĐƠN VỊ</label><label class="flex items-center gap-5 cursor-pointer font-black text-xl text-slate-700"><input type="checkbox" data-group="E_NguonLuc" value="RPA CoE" class="custom-check"> RPA CoE HỖ TRỢ</label><label class="flex items-center gap-5 cursor-pointer font-black text-xl text-slate-700"><input type="checkbox" data-group="E_NguonLuc" value="Khối CNTT" class="custom-check"> KHỐI CNTT&CĐS</label></div><div class="space-y-5"><label class="label-bold text-2xl uppercase">Đề xuất khác của đơn vị</label><textarea data-field="E_DeXuat" class="input-premium desc-box-full text-xl !min-h-[300px]" placeholder="Nhập các mong muốn, đề xuất khác..."></textarea></div></div>
+                    <div class="flex justify-between pt-10"><button type="button" onclick="showStep('D')" class="px-20 py-7 border-4 border-slate-100 text-slate-400 rounded-3xl font-black uppercase text-xl">QUAY LẠI</button><button type="button" onclick="showStep('F')" class="px-28 py-9 btn-vcb rounded-[3.5rem] font-black uppercase text-2xl shadow-2xl hover:scale-105 transition-all">TIẾP THEO (MỤC F)</button></div>
+                </div>
+                <!-- STEP F -->
+                <div id="stepF" class="hidden space-y-14">
+                    <h3 class="text-4xl font-900 text-[#005a3c] uppercase border-b-8 border-emerald-500 pb-5 inline-block tracking-tighter">F. ĐÁNH GIÁ CỦA RPA CoE</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-14">
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Phân loại BOT</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_LoaiBOT" value="Bot Cá nhân" class="custom-check"> Bot Cá nhân</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_LoaiBOT" value="Bot tập trung" class="custom-check"> Bot tập trung</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Hình thức vận hành</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_VanHanh" value="Nội bộ" class="custom-check"> Nội bộ đơn vị</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_VanHanh" value="Tập trung" class="custom-check"> Vận hành tập trung</label></div></div>
+                        <div class="space-y-8"><label class="label-bold border-l-8 border-emerald-500 pl-5 text-xl uppercase">Đơn vị phát triển</label><div class="flex flex-col gap-6 font-extrabold text-xl"><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_PhatTrien" value="Nội bộ" class="custom-check"> Nội bộ đơn vị</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_PhatTrien" value="RPA CoE" class="custom-check"> RPA CoE hỗ trợ</label><label class="flex items-center gap-5 cursor-pointer"><input type="checkbox" data-group="F_PhatTrien" value="Khối CNTT" class="custom-check"> Khối CNTT thực hiện</label></div></div>
+                    </div>
+                    <div id="loadingBox" class="hidden text-center py-10"><div class="loader mx-auto mb-5"></div><p class="font-black text-3xl text-[#005a3c] animate-pulse uppercase tracking-widest">ĐANG CẬP NHẬT HỆ THỐNG...</p></div>
+                    <div class="flex justify-between pt-16">
+                        <button type="button" onclick="showStep('E')" class="px-20 py-8 border-4 border-slate-100 text-slate-400 rounded-3xl font-black uppercase text-xl">QUAY LẠI</button>
+                        <button type="submit" id="submitBtn" class="px-44 py-12 btn-vcb rounded-[4rem] font-black uppercase text-4xl shadow-[0_35px_60px_-15px_rgba(0,90,60,0.4)] hover:scale-105 transition-all">GỬI HỆ THỐNG <i data-lucide="send" class="inline w-14 h-14 ml-6"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<!-- TOAST -->
+<div id="toastMsg" style="display:none;position:fixed;bottom:40px;right:40px;z-index:9999;min-width:340px;" class="premium-glass rounded-[2rem] px-10 py-7 flex items-center gap-6 shadow-2xl border-l-8 border-emerald-500">
+    <i data-lucide="check-circle-2" class="w-10 h-10 text-emerald-600 flex-shrink-0"></i>
+    <span id="toastText" class="text-xl font-black text-slate-800"></span>
+</div>
+
+<script>
+lucide.createIcons();
+let userEmail="", selectedFiles=[], oldFiles=[], currentMode="new", currentID="";
+const itemCache={};
+// Lưu Chart instances để destroy trước khi re-render
+const chartInstances={};
+
+const targetUrl="https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f22ee6797463401391257a0ae0ac2bff/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_kpmCn_SXyAozsiDT8qywzvbMgDHkRyGTdRjyiq7xCo";
+
+function buildUrl(p){const u=new URL(targetUrl);Object.keys(p).forEach(k=>u.searchParams.append(k,p[k]));return u.toString();}
+
+function initScrollSync(){
+    const thead=document.getElementById('theadWrapper'),tbody=document.getElementById('tbodyWrapper');
+    if(!thead||!tbody)return;
+    tbody.addEventListener('scroll',()=>{thead.scrollLeft=tbody.scrollLeft;},{passive:true});
+}
+
+function showToast(msg,isError=false){
+    const t=document.getElementById('toastMsg'),tx=document.getElementById('toastText'),ic=t.querySelector('[data-lucide]');
+    tx.innerText=msg; t.style.borderColor=isError?'#ef4444':'#10b981';
+    ic.setAttribute('data-lucide',isError?'x-circle':'check-circle-2');
+    lucide.createIcons(); t.style.display='flex';
+    setTimeout(()=>{t.style.display='none';},3500);
+}
+
+function parseVcbData(res){
+    let d=[];
+    if(Array.isArray(res)&&typeof res[0]==='string'&&res[0].startsWith('{')){
+        try{d=JSON.parse("["+res[0]+"]");}catch(e){console.error(e);}
+    }else{d=Array.isArray(res)?res:[res];}
+    return d;
+}
+
+function parseFileLink(s){
+    if(!s)return[];
+    if(s.startsWith('http'))return[{fileName:'Tài liệu liên kết',link:s}];
+    try{let f=s.replace(/}{/g,'},{');if(!f.startsWith('['))f='['+f+']';return JSON.parse(f);}
+    catch(e){return[];}
+}
+
+// ============================================================
+//  CHART LOGIC
+// ============================================================
+
+// Đếm multi-value fields (vd: "Hàng ngày, Hàng tuần")
+function countMultiField(dataArray, fieldName){
+    const counts={};
+    dataArray.forEach(item=>{
+        const val=(item.Data||{})[fieldName]||'';
+        if(!val)return;
+        val.split(',').map(v=>v.trim()).filter(Boolean).forEach(v=>{
+            counts[v]=(counts[v]||0)+1;
+        });
+    });
+    return counts;
+}
+
+// Đếm single-value fields
+function countField(dataArray, fieldName){
+    const counts={};
+    dataArray.forEach(item=>{
+        const val=(item.Data||{})[fieldName]||'Không rõ';
+        const key=val||'Không rõ';
+        counts[key]=(counts[key]||0)+1;
+    });
+    return counts;
+}
+
+function destroyChart(id){
+    if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];}
+}
+
+// Bảng màu VCB-style
+const COLORS_GREEN=['#005a3c','#00895c','#00b87c','#34d399','#6ee7b7','#a7f3d0'];
+const COLORS_MULTI=['#005a3c','#0ea5e9','#f59e0b','#8b5cf6','#ef4444','#10b981','#f97316','#06b6d4'];
+const COLORS_RISK={'Thấp':'#10b981','Trung bình':'#f59e0b','Cao':'#ef4444','Không rõ':'#94a3b8'};
+
+function renderCharts(dataArray){
+    const total=dataArray.length;
+
+    // KPI
+    const donViSet=new Set(dataArray.map(i=>(i.Data||{}).A_DonViDeXuat).filter(Boolean));
+    const caoCount=dataArray.filter(i=>(i.Data||{}).B_MucDoRuiRo==='Cao').length;
+    const dailyCount=dataArray.filter(i=>((i.Data||{}).B_TanSuat||'').includes('Hàng ngày')).length;
+    document.getElementById('kpi-total').innerText=total;
+    document.getElementById('kpi-donvi').innerText=donViSet.size;
+    document.getElementById('kpi-cao').innerText=caoCount;
+    document.getElementById('kpi-daily').innerText=dailyCount;
+
+    // Shared chart defaults
+    Chart.defaults.font.family="'Plus Jakarta Sans', sans-serif";
+    Chart.defaults.font.weight='700';
+    const pluginDefaults={legend:{labels:{font:{family:"'Plus Jakarta Sans', sans-serif",weight:'700',size:13},padding:16}},tooltip:{titleFont:{weight:'800'},bodyFont:{weight:'600'},padding:12,cornerRadius:10}};
+
+    // 1. Bar: Đơn vị
+    {
+        destroyChart('chartDonVi');
+        const counts=countField(dataArray,'A_DonViDeXuat');
+        const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+        const labels=sorted.map(e=>e[0]),data=sorted.map(e=>e[1]);
+        chartInstances['chartDonVi']=new Chart(document.getElementById('chartDonVi'),{
+            type:'bar',
+            data:{labels,datasets:[{label:'Số quy trình',data,backgroundColor:labels.map((_,i)=>COLORS_GREEN[i%COLORS_GREEN.length]),borderRadius:10,borderSkipped:false}]},
+            options:{responsive:true,maintainAspectRatio:false,plugins:{...pluginDefaults,legend:{display:false}},scales:{x:{ticks:{font:{weight:'700',size:11}},grid:{display:false}},y:{ticks:{font:{weight:'700'},stepSize:1},grid:{color:'#f1f5f9'}}}}
+        });
+    }
+
+    // 2. Donut: Mức độ rủi ro
+    {
+        destroyChart('chartRuiRo');
+        const counts=countField(dataArray,'B_MucDoRuiRo');
+        const order=['Thấp','Trung bình','Cao','Không rõ'];
+        const labels=order.filter(k=>counts[k]),data=labels.map(k=>counts[k]);
+        chartInstances['chartRuiRo']=new Chart(document.getElementById('chartRuiRo'),{
+            type:'doughnut',
+            data:{labels,datasets:[{data,backgroundColor:labels.map(k=>COLORS_RISK[k]||'#94a3b8'),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+            options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{...pluginDefaults,legend:{position:'bottom',labels:{...pluginDefaults.legend.labels,usePointStyle:true,pointStyleWidth:14}}}}
+        });
+    }
+
+    // 3. Horizontal bar: Tần suất
+    {
+        destroyChart('chartTanSuat');
+        const order=['Hàng ngày','Hàng tuần','Hàng tháng','Hàng quý','Hàng năm','Theo phát sinh'];
+        const counts=countMultiField(dataArray,'B_TanSuat');
+        const labels=order.filter(k=>counts[k]||true),data=order.map(k=>counts[k]||0);
+        chartInstances['chartTanSuat']=new Chart(document.getElementById('chartTanSuat'),{
+            type:'bar',
+            data:{labels,datasets:[{label:'Số quy trình',data,backgroundColor:COLORS_MULTI,borderRadius:8,borderSkipped:false}]},
+            options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...pluginDefaults,legend:{display:false}},scales:{x:{ticks:{font:{weight:'700'},stepSize:1},grid:{color:'#f1f5f9'}},y:{ticks:{font:{weight:'700',size:12}},grid:{display:false}}}}
+        });
+    }
+
+    // 4. Donut: Phạm vi sử dụng
+    {
+        destroyChart('chartPhamVi');
+        const counts=countMultiField(dataArray,'B_PhamVi');
+        const labels=Object.keys(counts),data=Object.values(counts);
+        chartInstances['chartPhamVi']=new Chart(document.getElementById('chartPhamVi'),{
+            type:'doughnut',
+            data:{labels,datasets:[{data,backgroundColor:['#005a3c','#0ea5e9','#8b5cf6'],borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+            options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{...pluginDefaults,legend:{position:'bottom',labels:{...pluginDefaults.legend.labels,usePointStyle:true,pointStyleWidth:14}}}}
+        });
+    }
+
+    // 5. Horizontal bar: Nguồn lực (E_NguonLuc)
+    {
+        destroyChart('chartNguonLuc');
+        const counts=countMultiField(dataArray,'E_NguonLuc');
+        const labels=Object.keys(counts).length?Object.keys(counts):['Nội bộ','RPA CoE','Khối CNTT'];
+        const data=labels.map(k=>counts[k]||0);
+        chartInstances['chartNguonLuc']=new Chart(document.getElementById('chartNguonLuc'),{
+            type:'bar',
+            data:{labels,datasets:[{label:'Số đề xuất',data,backgroundColor:['#005a3c','#0ea5e9','#8b5cf6'],borderRadius:10,borderSkipped:false}]},
+            options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...pluginDefaults,legend:{display:false}},scales:{x:{ticks:{font:{weight:'700'},stepSize:1},grid:{color:'#f1f5f9'}},y:{ticks:{font:{weight:'700',size:13}},grid:{display:false}}}}
+        });
+    }
+
+    // 6. Pie: Mục đích (B_MucDich)
+    {
+        destroyChart('chartMucDich');
+        const counts=countMultiField(dataArray,'B_MucDich');
+        const labels=Object.keys(counts).length?Object.keys(counts):['Tác nghiệp cá nhân','Thay thế quy mô lớn'];
+        const data=labels.map(k=>counts[k]||0);
+        chartInstances['chartMucDich']=new Chart(document.getElementById('chartMucDich'),{
+            type:'pie',
+            data:{labels,datasets:[{data,backgroundColor:['#005a3c','#f59e0b'],borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+            options:{responsive:true,maintainAspectRatio:false,plugins:{...pluginDefaults,legend:{position:'bottom',labels:{...pluginDefaults.legend.labels,usePointStyle:true,pointStyleWidth:14}}}}
+        });
+    }
+}
+
+// Mở chart screen — dùng cache itemCache nếu đã có dữ liệu
+function openChartScreen(){
+    document.getElementById('mainDashboard').classList.add('hidden');
+    document.getElementById('chartScreen').classList.remove('hidden');
+    lucide.createIcons();
+
+    const dataArray=Object.values(itemCache);
+    if(dataArray.length>0){
+        renderCharts(dataArray);
+    } else {
+        // Nếu chưa có cache thì fetch lại
+        fetchAndRenderCharts();
+    }
+}
+
+async function fetchAndRenderCharts(){
+    try{
+        const res=await(await fetch(buildUrl({Action:'GET_DASHBOARD',UserEmail:userEmail}),{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).json();
+        const arr=parseVcbData(res);
+        // Cập nhật cache
+        arr.forEach(item=>{itemCache[item.ID]=item;});
+        renderCharts(arr);
+    }catch(e){
+        showToast('❌ Lỗi tải dữ liệu biểu đồ!',true);
+    }
+}
+
+function backToDashboardFromChart(){
+    document.getElementById('chartScreen').classList.add('hidden');
+    document.getElementById('mainDashboard').classList.remove('hidden');
+    requestAnimationFrame(initScrollSync);
+}
+
+// ============================================================
+//  FILTER LOGIC
+// ============================================================
+let allDataCache = []; // lưu toàn bộ data gốc để filter client-side
+
+function toggleFilterPanel(){
+    const panel=document.getElementById('filterPanel');
+    const chevron=document.getElementById('filterChevron');
+    const btn=document.getElementById('btnToggleFilter');
+    const isOpen=panel.classList.contains('open');
+    panel.classList.toggle('open',!isOpen);
+    chevron.classList.toggle('open',!isOpen);
+    btn.style.background=!isOpen?'#e8f5ef':'';
+    lucide.createIcons();
+}
+
+function toggleChip(el, hiddenId, value){
+    const isActive=el.classList.contains('active');
+    // Cho phép multi-select với tần suất, single-select cho rủi ro
+    if(hiddenId==='fRuiRo'){
+        // single select
+        document.querySelectorAll(`[onclick*="'${hiddenId}'"]`).forEach(c=>c.classList.remove('active'));
+        if(!isActive){ el.classList.add('active'); document.getElementById(hiddenId).value=value; }
+        else { document.getElementById(hiddenId).value=''; }
+    } else {
+        // multi select
+        el.classList.toggle('active');
+        const currentVals=document.getElementById(hiddenId).value.split(',').filter(Boolean);
+        if(el.classList.contains('active')){ if(!currentVals.includes(value))currentVals.push(value); }
+        else { const idx=currentVals.indexOf(value); if(idx>-1)currentVals.splice(idx,1); }
+        document.getElementById(hiddenId).value=currentVals.join(',');
+    }
+    applyFilters();
+}
+
+function applyFilters(){
+    const fTen=(document.getElementById('fTen').value||'').toLowerCase().trim();
+    const fDonVi=(document.getElementById('fDonVi').value||'').toLowerCase().trim();
+    const fRuiRo=document.getElementById('fRuiRo').value;
+    const fTanSuatRaw=document.getElementById('fTanSuat').value;
+    const fTanSuatArr=fTanSuatRaw.split(',').filter(Boolean);
+
+    const filtered=allDataCache.filter(item=>{
+        const d=item.Data||{};
+        if(fTen && !(d.A_Ten||'').toLowerCase().includes(fTen)) return false;
+        if(fDonVi && !(d.A_DonViDeXuat||'').toLowerCase().includes(fDonVi)) return false;
+        if(fRuiRo && (d.B_MucDoRuiRo||'')!==fRuiRo) return false;
+        if(fTanSuatArr.length>0){
+            const ts=d.B_TanSuat||'';
+            const hasAll=fTanSuatArr.every(v=>ts.includes(v));
+            if(!hasAll) return false;
+        }
+        return true;
+    });
+
+    renderTableRows(filtered);
+
+    // Update badge & summary
+    const total=allDataCache.length, shown=filtered.length;
+    const badge=document.getElementById('filterResultBadge');
+    const summary=document.getElementById('filterSummary');
+    const hasFilter=fTen||fDonVi||fRuiRo||fTanSuatArr.length>0;
+    if(hasFilter){
+        badge.style.display='inline-block';
+        badge.innerText=`${shown} / ${total}`;
+        const parts=[];
+        if(fTen) parts.push(`Tên: "${fTen}"`);
+        if(fDonVi) parts.push(`Đơn vị: "${fDonVi}"`);
+        if(fRuiRo) parts.push(`Rủi ro: ${fRuiRo}`);
+        if(fTanSuatArr.length) parts.push(`Tần suất: ${fTanSuatArr.join(', ')}`);
+        summary.innerText='Đang lọc theo: '+parts.join(' · ');
+    } else {
+        badge.style.display='none';
+        summary.innerText='';
+    }
+}
+
+function clearFilters(){
+    document.getElementById('fTen').value='';
+    document.getElementById('fDonVi').value='';
+    document.getElementById('fRuiRo').value='';
+    document.getElementById('fTanSuat').value='';
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    document.getElementById('filterResultBadge').style.display='none';
+    document.getElementById('filterSummary').innerText='';
+    renderTableRows(allDataCache);
+}
+
+function renderTableRows(arr){
+    const tbody=document.getElementById('dataTableBody');
+    if(arr.length>0){
+        tbody.innerHTML=arr.map(item=>{
+            const d=item.Data||{};
+            const files=parseFileLink(item.File);
+            const fileHtml=files.map(f=>`<a href="${f.link}" target="_blank" class="block text-sm font-black text-blue-600 hover:text-blue-800 underline mb-1 truncate">🔗 ${f.fileName}</a>`).join('');
+            return `<tr class="border-b border-slate-100 hover:bg-emerald-50/40 transition-all">
+                <td class="px-6 py-5 db-cell-id">${item.ID||'---'}</td>
+                <td class="px-6 py-5 db-cell-sub opacity-60 truncate">${d.A_Ma||'---'}</td>
+                <td class="px-6 py-5 db-cell-main">${d.A_Ten||'---'}</td>
+                <td class="px-6 py-5 db-cell-sub truncate">${d.A_DonViDeXuat||'---'}</td>
+                <td class="px-6 py-5">${fileHtml||'<span class="text-slate-300 italic text-sm">Trống</span>'}</td>
+                <td class="px-6 py-5">${item.CreatedAt?`<span class="text-xs font-black text-slate-500 bg-slate-100 px-2 py-1 rounded-lg block truncate">🕐 ${item.CreatedAt}</span>`:'<span class="text-slate-300 text-sm">---</span>'}</td>
+                <td class="px-6 py-5">${item.CreatedBy?`<span class="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg block truncate">${item.CreatedBy}</span>`:'<span class="text-slate-300 text-sm">---</span>'}</td>
+                <td class="px-6 py-5">${item.ModifiedAt?`<span class="text-xs font-black text-slate-500 bg-amber-50 px-2 py-1 rounded-lg block truncate">✏️ ${item.ModifiedAt}</span>`:'<span class="text-slate-300 text-sm">---</span>'}</td>
+                <td class="px-6 py-5">${item.ModifiedBy?`<span class="text-xs font-black text-amber-700 bg-amber-50 px-2 py-1 rounded-lg block truncate">${item.ModifiedBy}</span>`:'<span class="text-slate-300 text-sm">---</span>'}</td>
+                <td class="px-6 py-5">
+                    <div class="flex justify-end gap-3">
+                        <button onclick="handleEditAction(${item.ID})" class="p-3 bg-emerald-50 text-emerald-700 rounded-xl hover:bg-[#005a3c] hover:text-white transition-all border border-emerald-100"><i data-lucide="edit-3" class="w-6 h-6"></i></button>
+                        <button onclick="handleDeleteAction(${item.ID})" class="p-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all border border-red-100"><i data-lucide="trash-2" class="w-6 h-6"></i></button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+        lucide.createIcons();
+    } else {
+        tbody.innerHTML=`<tr><td colspan="10" class="text-center py-20 font-black text-2xl italic text-slate-300">
+            <div class="flex flex-col items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg>
+                Không tìm thấy kết quả phù hợp
+            </div>
+        </td></tr>`;
+    }
+}
+
+// ============================================================
+//  DASHBOARD
+// ============================================================
+async function loadListData(){
+    const tbody=document.getElementById('dataTableBody'),loader=document.getElementById('loadingTable');
+    loader.classList.remove('hidden'); tbody.innerHTML='';
+    // Reset filter khi refresh dữ liệu mới
+    clearFilters();
+    try{
+        const res=await(await fetch(buildUrl({Action:'GET_DASHBOARD',UserEmail:userEmail}),{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).json();
+        loader.classList.add('hidden');
+        const arr=parseVcbData(res);
+        // Lưu vào cache
+        arr.forEach(item=>{itemCache[item.ID]=item;});
+        allDataCache=[...arr];
+        renderTableRows(allDataCache);
+    }catch(e){loader.classList.add('hidden');showToast('❌ Lỗi tải dữ liệu!',true);}
+}
+
+async function handleDeleteAction(id){
+    if(!confirm(`⚠️ BẠN CÓ CHẮC MUỐN XÓA QUY TRÌNH ID: ${id}?\n\nHành động này KHÔNG THỂ hoàn tác!`))return;
+    const inp=prompt(`🔐 Nhập "XOA" để xác nhận xóa ID: ${id}:`);
+    if(inp===null)return;
+    if(inp.trim()!=='XOA'){showToast('❌ Sai cú pháp!',true);return;}
+    try{
+        const c=new AbortController();setTimeout(()=>c.abort(),30000);
+        const res=await fetch(buildUrl({Action:'DELETE',ID:id}),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ID:id}),signal:c.signal});
+        const txt=await res.text();
+        if(res.status===200||res.status===202){await loadListData();showToast('🗑️ Đã xóa thành công!');}
+        else showToast(`❌ Lỗi: ${res.status}`,true);
+    }catch(e){showToast(e.name==='AbortError'?'⏱️ Hết thời gian chờ!':`❌ ${e.message}`,true);}
+}
+
+function handleEditAction(id){
+    const item=itemCache[id];
+    if(!item){showToast('❌ Không tìm thấy! Refresh lại.',true);return;}
+    openForm('edit',item);
+}
+
+async function openForm(mode,itemData=null){
+    currentMode=mode;
+    document.getElementById('mainDashboard').classList.add('hidden');
+    document.getElementById('formScreen').classList.remove('hidden');
+    document.getElementById('requestForm').reset();
+    selectedFiles=[];oldFiles=[];
+    document.getElementById('newFileList').innerHTML='';
+    document.getElementById('oldFileList').innerHTML='<p class="text-lg text-slate-300 italic text-center py-10 font-bold">Chưa có tài liệu</p>';
+    const badge=document.getElementById('modeBadge');
+    if(mode==='edit'&&itemData){
+        currentID=itemData.ID;
+        badge.innerText=`EDIT MODE (ID: ${currentID})`;
+        badge.className='text-[10px] font-black uppercase italic tracking-widest bg-blue-50 px-4 py-1.5 rounded-full border border-blue-200 text-blue-600';
+        setTimeout(()=>renderFormData(itemData),50);
+    }else{
+        currentID='';badge.innerText='NEW MODE';
+        badge.className='text-[10px] font-black uppercase italic tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full border border-emerald-200 text-emerald-600';
+        document.querySelector('[data-field="A_NgayDangKy"]').value=new Date().toISOString().split('T')[0];
+    }
+    showStep('A');
+}
+
+function renderFormData(item){
+    const data=item.Data||{};
+    document.querySelectorAll('[data-field]').forEach(el=>{const f=el.getAttribute('data-field');if(data[f]!=null)el.value=data[f];});
+    const radios={"risk":"B_MucDoRuiRo","d-dq":"D_DuKienThayDoi"};
+    Object.keys(radios).forEach(name=>{const val=data[radios[name]];if(val){const r=document.querySelector(`input[name="${name}"][value="${val}"]`);if(r)r.checked=true;}});
+    ['B_MucDich','B_PhamVi','B_GiamSat','B_TanSuat','C_Loai','C_Nguon','E_NguonLuc','F_LoaiBOT','F_VanHanh','F_PhatTrien'].forEach(g=>{
+        if(data[g])data[g].split(', ').forEach(v=>{const cb=document.querySelector(`input[data-group="${g}"][value="${v}"]`);if(cb)cb.checked=true;});
+    });
+    oldFiles=parseFileLink(item.File);renderOldFileList();
+}
+
+function renderOldFileList(){
+    const el=document.getElementById('oldFileList');
+    el.innerHTML=oldFiles.length>0?oldFiles.map((f,i)=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:16px 20px;border-radius:15px;margin-top:10px;border:1px solid rgba(0,90,60,0.1);background:rgba(0,90,60,0.05);"><i data-lucide="external-link" class="w-8 h-8 text-emerald-700 flex-shrink-0 mt-1"></i><a href="${f.link}" target="_blank" style="flex:1;min-width:0;word-break:break-all;" class="text-lg font-black text-emerald-800 underline">${f.fileName}</a><button type="button" onclick="removeOldFile(${i})" style="flex-shrink:0;background:none;border:none;cursor:pointer;padding:4px;"><i data-lucide="x-circle" class="w-9 h-9 text-red-400" style="display:block;"></i></button></div>`).join(''):'<p class="text-lg text-slate-300 italic text-center py-10 font-bold">Không còn tài liệu nào</p>';
+    lucide.createIcons();
+}
+
+function removeOldFile(i){if(confirm('Gỡ liên kết file này?')){oldFiles.splice(i,1);renderOldFileList();}}
+
+document.getElementById('requestForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=document.getElementById('submitBtn');btn.disabled=true;
+    document.getElementById('loadingBox').classList.remove('hidden');
+    const payload={UserEmail:userEmail,ID:currentID,FormData:{},Attachments:selectedFiles,OldFiles:oldFiles};
+    document.querySelectorAll('[data-field]').forEach(el=>payload.FormData[el.getAttribute('data-field')]=el.value);
+    payload.FormData["B_MucDoRuiRo"]=document.querySelector('input[name="risk"]:checked')?.value||"";
+    payload.FormData["D_DuKienThayDoi"]=document.querySelector('input[name="d-dq"]:checked')?.value||"";
+    ['B_MucDich','B_PhamVi','B_GiamSat','B_TanSuat','C_Loai','C_Nguon','E_NguonLuc','F_LoaiBOT','F_VanHanh','F_PhatTrien'].forEach(g=>{
+        payload.FormData[g]=Array.from(document.querySelectorAll(`[data-group="${g}"]:checked`)).map(c=>c.value).join(', ');
+    });
+    const action=currentMode==='edit'?'EDIT':'SUBMIT',modeLabel=currentMode==='edit'?'Cập nhật':'Tạo mới';
+    const now=new Date();
+    const ts=now.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    if(currentMode==='new'){payload.CreatedAt=ts;payload.CreatedBy=userEmail;}
+    else{payload.ModifiedAt=ts;payload.ModifiedBy=userEmail;}
+    try{
+        const c=new AbortController();const tid=setTimeout(()=>c.abort(),60000);
+        const res=await fetch(buildUrl({Action:action,Mode:currentMode}),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:c.signal});
+        clearTimeout(tid);const txt=await res.text();
+        if(res.status===200||res.status===202){backToDashboard();setTimeout(()=>showToast(`✅ ${modeLabel} thành công!`),500);}
+        else showToast(`❌ Lỗi ${res.status}: ${txt}`,true);
+    }catch(err){showToast(err.name==='AbortError'?'⏱️ Hết thời gian chờ!':`❌ ${err.message}`,true);}
+    finally{btn.disabled=false;document.getElementById('loadingBox').classList.add('hidden');}
+});
+
+function toOTPScreen(){
+    userEmail=document.getElementById('emailInput').value;
+    if(!userEmail.includes('@'))return showToast('Nhập email hợp lệ!',true);
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('otpScreen').classList.remove('hidden');
+}
+
+async function verifyOTPFlow(){
+    document.getElementById('userLabel').innerText=userEmail;
+    document.getElementById('otpScreen').classList.add('hidden');
+    document.getElementById('mainDashboard').classList.remove('hidden');
+    requestAnimationFrame(initScrollSync);
+    await loadListData();
+}
+
+function backToDashboard(){
+    document.getElementById('formScreen').classList.add('hidden');
+    document.getElementById('mainDashboard').classList.remove('hidden');
+    requestAnimationFrame(initScrollSync);
+    loadListData();
+}
+
+function showStep(s){
+    ['stepA','stepB','stepC','stepD','stepE','stepF'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+    document.getElementById('step'+s).classList.remove('hidden');
+    window.scrollTo(0,0);
+}
+
+async function handleFiles(files){
+    for(let f of files){
+        if(f.size>3*1024*1024){showToast(`⚠️ "${f.name}" quá lớn. Giới hạn 3MB`,true);continue;}
+        const r=new FileReader();r.readAsDataURL(f);
+        r.onload=()=>{selectedFiles.push({fileName:f.name,fileContent:r.result.split(',')[1]});renderNewFileList();};
+    }
+}
+
+function renderNewFileList(){
+    document.getElementById('newFileList').innerHTML=selectedFiles.map((f,i)=>`<div style="display:flex;align-items:center;gap:12px;padding:15px 20px;border-radius:15px;margin-top:10px;border:1px solid rgba(0,90,60,0.1);background:rgba(0,90,60,0.05);"><i data-lucide="file-plus" class="w-8 h-8 text-blue-600 flex-shrink-0"></i><span style="flex:1;min-width:0;word-break:break-all;" class="text-lg font-black text-blue-800">${f.fileName}</span><button type="button" onclick="selectedFiles.splice(${i},1);renderNewFileList()" style="flex-shrink:0;background:none;border:none;cursor:pointer;"><i data-lucide="trash-2" class="w-8 h-8 text-red-400" style="display:block;"></i></button></div>`).join('');
+    lucide.createIcons();
+}
+
+document.getElementById('timeInput').addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');if(v.length>6)v=v.substring(0,6);
+    let f='';if(v.length>0){f+=v.substring(0,2);if(v.length>2){f+=':'+v.substring(2,4);if(v.length>4)f+=':'+v.substring(4,6);}}
+    e.target.value=f;
+});
+
+const otpInputs=document.querySelectorAll('.otp-slot');
+otpInputs.forEach((inp,i)=>{
+    inp.addEventListener('input',e=>{if(e.target.value.length===1&&i<5)otpInputs[i+1].focus();});
+    inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!e.target.value&&i>0)otpInputs[i-1].focus();});
+});
+
+// ============================================================
+//  AI AGENT — Groq API (Qwen3-32B / Llama 3.3 70B)
+//  Key stored XOR-encoded in memory only — never plain text
+// ============================================================
+let chatHistory = [];
+let _aiKey = '';
+let groqModel = 'qwen/qwen3-32b';
+let aiThinking = false;
+
+// ── XOR obfuscation (key never stored as plain string) ───────
+function _xd(enc, seed) {
+    let s = seed >>> 0, r = '';
+    for (let i = 0; i < enc.length; i++) {
+        s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+        r += String.fromCharCode(enc[i] ^ ((s & 0x7f) || 1));
+    }
+    return r;
+}
+function _xe(str, seed) {
+    let s = seed >>> 0, r = [];
+    for (let i = 0; i < str.length; i++) {
+        s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+        r.push(str.charCodeAt(i) ^ ((s & 0x7f) || 1));
+    }
+    return r;
+}
+let _encKey = null;
+const _S = 0xDEAD42;
+function _storeKey(k) { _encKey = _xe(k, _S); _aiKey = k; }
+function _loadKey()   { return _encKey ? _xd(_encKey, _S) : ''; }
+
+// ── Navigation ────────────────────────────────────────────────
+function backToDashboardFromAi(){
+    document.getElementById('aiScreen').classList.add('hidden');
+    document.getElementById('mainDashboard').classList.remove('hidden');
+    requestAnimationFrame(initScrollSync);
+}
+
+function openAiScreen(){
+    document.getElementById('mainDashboard').classList.add('hidden');
+    document.getElementById('aiScreen').classList.remove('hidden');
+    lucide.createIcons();
+    // Auto-load hardcoded key (decoded at runtime)
+    if(!_aiKey && window.__ak){ _storeKey(window.__ak); updateKeyStatusUI(true); }
+    const savedModel = sessionStorage.getItem('groq_model');
+    if(savedModel){
+        groqModel = savedModel;
+        const sel = document.getElementById('modelSelect');
+        if(![...sel.options].find(o=>o.value===savedModel)){
+            const opt = document.createElement('option');
+            opt.value = savedModel; opt.textContent = savedModel;
+            sel.appendChild(opt);
+        }
+        sel.value = savedModel;
+        const badge = document.getElementById('modelBadge');
+        if(badge) badge.textContent = savedModel;
+    }
+}
+
+
+// ── Key modal stubs (key is hardcoded, no input needed) ──
+function openKeyModal(){ /* disabled */ }
+function closeKeyModal(){ /* disabled */ }
+function toggleShowKey(){ /* disabled */ }
+function saveAndTestKey(){ /* disabled */ }
+
+
+function closeKeyModal(){
+    document.getElementById('keyModal').style.display = 'none';
+}
+
+function toggleShowKey(){
+    const inp = document.getElementById('apiKeyInput');
+    const btn = document.getElementById('btnToggleKey');
+    if(inp.type === 'password'){ inp.type = 'text'; btn.textContent = '🙈'; }
+    else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+
+
+
+async function saveAndTestKey(){
+    const key = document.getElementById('apiKeyInput').value.trim();
+    const btn = document.getElementById('btnTestKey');
+    const result = document.getElementById('keyTestResult');
+
+    if(!key){
+        result.style.display='block';
+        result.style.background='#fee2e2'; result.style.color='#dc2626';
+        result.innerHTML='⚠️ Vui lòng dán Groq API key vào ô trên (bắt đầu bằng <code>gsk_</code>).';
+        return;
+    }
+
+    btn.textContent='⏳ Đang kiểm tra...'; btn.disabled=true;
+    result.style.display='block';
+    result.style.background='#fef3c7'; result.style.color='#92400e';
+    result.innerHTML='🔍 Đang kết nối Groq API...';
+
+    try {
+        // Test bằng cách gọi models list
+        const testRes = await fetch('https://api.groq.com/openai/v1/models', {
+            headers: { 'Authorization': 'Bearer ' + key }
+        });
+        const testData = await testRes.json();
+
+        if(!testRes.ok){
+            const errMsg = testData?.error?.message || `HTTP ${testRes.status}`;
+            result.style.background='#fee2e2'; result.style.color='#dc2626';
+            if(testRes.status===401){
+                result.innerHTML='🔑 <strong>Key không hợp lệ.</strong> Lấy key tại <a href="https://console.groq.com/keys" target="_blank" style="color:#7c3aed;text-decoration:underline;">console.groq.com</a>';
+            } else {
+                result.innerHTML=`❌ ${errMsg}`;
+            }
+            btn.textContent='🔍 Lưu & Kiểm tra'; btn.disabled=false;
+            return;
+        }
+
+        // Lọc models chat
+        const allModels = testData.data || [];
+        const chatModels = allModels.filter(m => !m.id.includes('whisper') && !m.id.includes('tts'));
+
+        // Cập nhật dropdown
+        const select = document.getElementById('modelSelect');
+        select.innerHTML = '';
+        const preferred = ['qwen/qwen3-32b','llama-3.3-70b-versatile','llama3-70b-8192','mixtral-8x7b-32768','llama3-8b-8192'];
+        const ordered = [...preferred.filter(p=>chatModels.find(m=>m.id===p)), ...chatModels.filter(m=>!preferred.includes(m.id)).map(m=>m.id)];
+        ordered.forEach(id => {
+            const opt = document.createElement('option');
+            opt.value = id;
+            const label = id==='qwen/qwen3-32b' ? '⭐ Qwen3-32B (Tốt nhất)' :
+                          id.includes('70b') ? '🔥 '+id : id;
+            opt.textContent = label;
+            select.appendChild(opt);
+        });
+        select.value = ordered[0] || 'qwen/qwen3-32b';
+        groqModel = select.value;
+        sessionStorage.setItem('groq_model', groqModel);
+
+        // ── Lưu key dưới dạng XOR encoded — KHÔNG lưu plain text ──
+        _storeKey(key);
+        _aiKey = key;
+        updateKeyStatusUI(true);
+
+        result.style.background='#dcfce7'; result.style.color='#15803d';
+        result.innerHTML=`✅ <strong>Kết nối Groq thành công!</strong><br>Tìm thấy ${chatModels.length} models.<br>Đang dùng: <code>${groqModel}</code><br><small style="opacity:0.7">🔒 Key được mã hóa trong bộ nhớ</small>`;
+
+        setTimeout(() => {
+            closeKeyModal();
+            appendMsg('ai', `🎉 <strong>Đã kết nối Groq API!</strong><br>Model: <code>${groqModel}</code> — ${chatModels.length} models khả dụng.<br>⚡ Tốc độ 300+ tokens/giây. Bắt đầu hỏi thôi!`);
+        }, 1500);
+
+    } catch(e) {
+        result.style.background='#fee2e2'; result.style.color='#dc2626';
+        result.innerHTML=`🌐 <strong>Lỗi kết nối:</strong> ${e.message}`;
+    } finally {
+        btn.textContent='🔍 Lưu & Kiểm tra'; btn.disabled=false;
+    }
+}
+
+function updateKeyStatusUI(ok, customText = ''){
+    const status = document.getElementById('keyStatus');
+    const badge = document.getElementById('modelBadge');
+    if(ok){
+        status.textContent = customText || '✓ Đã kết nối';
+        status.className = 'key-ok';
+        // key is hardcoded
+    } else {
+        status.textContent = 'Chưa cấu hình';
+        status.className = 'key-no';
+        // key is hardcoded
+    }
+    if(badge) badge.textContent = groqModel;
+}
+
+function onApiKeyChange(){ /* deprecated — dùng modal */ }
+
+function onModelChange(){
+    groqModel = document.getElementById('modelSelect').value;
+    sessionStorage.setItem('groq_model', groqModel);
+    const badge = document.getElementById('modelBadge');
+    if(badge) badge.textContent = groqModel;
+    showToast(`✓ Đã chọn: ${groqModel}`);
+}
+
+// ---- Textarea auto resize ----
+function autoResizeTextarea(el){
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+}
+
+// ---- Suggested questions ----
+function sendSuggest(el){
+    document.getElementById('chatInput').value = el.innerText.replace(/^[^\s]+\s/,'').trim();
+    sendChat();
+}
+
+// ---- Clear chat ----
+function clearChat(){
+    chatHistory = [];
+    const msgs = document.getElementById('chatMessages');
+    msgs.innerHTML = `<div id="chatWelcome" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;opacity:0.85;">
+        <div style="font-size:4rem;">🤖</div>
+        <h3 style="font-size:1.4rem;font-weight:900;color:#7c3aed;">RPA Hub AI Agent</h3>
+        <p style="font-size:0.95rem;font-weight:700;color:#64748b;text-align:center;max-width:480px;line-height:1.7;">
+            Tôi có thể giúp bạn <strong>tìm kiếm quy trình</strong>, <strong>thống kê dữ liệu</strong>,
+            <strong>đánh giá độ phù hợp RPA</strong> và <strong>gợi ý ưu tiên triển khai</strong>.
+        </p>
+        <span class="gemini-badge">✦ Powered by Groq · Qwen3-32B</span>
+    </div>`;
+}
+
+// ---- Render markdown-lite ----
+function renderMarkdown(text){
+    return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code style="background:#f1f5f9;padding:2px 6px;border-radius:5px;font-size:0.88em;font-family:monospace;">$1</code>')
+        .replace(/^### (.+)$/gm, '<p style="font-weight:900;font-size:1rem;color:#005a3c;margin:10px 0 4px;">$1</p>')
+        .replace(/^## (.+)$/gm, '<p style="font-weight:900;font-size:1.1rem;color:#005a3c;margin:12px 0 4px;">$1</p>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul style="margin:8px 0 0 18px;">$1</ul>')
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+}
+
+// ---- Append message to UI ----
+function appendMsg(role, htmlContent, toolsUsed=[]){
+    const welcome = document.getElementById('chatWelcome');
+    if(welcome) welcome.remove();
+
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+
+    if(role === 'user'){
+        div.className = 'msg-user';
+        div.innerHTML = `<div class="bubble">${htmlContent}</div>`;
+    } else {
+        const toolBadges = toolsUsed.map(t =>
+            `<span class="tool-badge">⚡ ${t}</span>`
+        ).join(' ');
+        div.className = 'msg-ai';
+        div.innerHTML = `
+            <div class="ai-avatar">🤖</div>
+            <div class="bubble">
+                ${toolBadges ? `<div style="margin-bottom:8px;">${toolBadges}</div>` : ''}
+                ${htmlContent}
+            </div>`;
+    }
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+}
+
+// ---- Typing indicator ----
+function showTyping(){
+    const welcome = document.getElementById('chatWelcome');
+    if(welcome) welcome.remove();
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.id = 'typingIndicator';
+    div.className = 'msg-ai';
+    div.innerHTML = `<div class="ai-avatar">🤖</div>
+        <div class="bubble" style="padding:16px 20px;">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+        </div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping(){
+    const el = document.getElementById('typingIndicator');
+    if(el) el.remove();
+}
+
+// ============================================================
+//  TOOL DEFINITIONS — OpenAI function calling format (Groq)
+// ============================================================
+const GROQ_TOOLS = [
+    {
+        type: "function",
+        function: {
+            name: "query_processes",
+            description: "Tìm kiếm và lọc danh sách quy trình RPA theo các tiêu chí. Dùng khi người dùng hỏi về quy trình cụ thể, tìm theo đơn vị, rủi ro, tần suất.",
+            parameters: {
+                type: "object",
+                properties: {
+                    keyword:  { type: "string", description: "Từ khóa trong tên quy trình" },
+                    don_vi:   { type: "string", description: "Đơn vị đề xuất" },
+                    rui_ro:   { type: "string", description: "Mức độ rủi ro: Thấp, Trung bình, Cao" },
+                    tan_suat: { type: "string", description: "Tần suất: Hàng ngày, Hàng tuần, Hàng tháng..." },
+                    limit:    { type: "number", description: "Số kết quả tối đa (mặc định 10)" }
+                }
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "get_statistics",
+            description: "Lấy thống kê tổng quan: tổng số QT, phân bổ rủi ro, đơn vị nhiều nhất, tần suất phổ biến.",
+            parameters: { type: "object", properties: {} }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "assess_rpa_fit",
+            description: "Đánh giá mức độ phù hợp triển khai RPA. Trả về điểm số 0-100 và lý giải.",
+            parameters: {
+                type: "object",
+                properties: {
+                    process_ids: { type: "string", description: "ID quy trình cách nhau bởi dấu phẩy, hoặc 'all'" }
+                },
+                required: ["process_ids"]
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "suggest_priority",
+            description: "Gợi ý thứ tự ưu tiên triển khai bot RPA, xếp hạng các quy trình theo điểm phù hợp.",
+            parameters: {
+                type: "object",
+                properties: {
+                    top_n: { type: "number", description: "Số quy trình cần gợi ý (mặc định 5)" }
+                }
+            }
+        }
+    }
+];
+
+// ============================================================
+//  TOOL HANDLERS — xử lý trong JS, không cần backend
+// ============================================================
+function handleToolCall(name, args){
+    const data = allDataCache;
+
+    if(name === 'query_processes'){
+        let results = [...data];
+        if(args.keyword) results = results.filter(i => (i.Data?.A_Ten||'').toLowerCase().includes(args.keyword.toLowerCase()));
+        if(args.don_vi)  results = results.filter(i => (i.Data?.A_DonViDeXuat||'').toLowerCase().includes(args.don_vi.toLowerCase()));
+        if(args.rui_ro)  results = results.filter(i => (i.Data?.B_MucDoRuiRo||'') === args.rui_ro);
+        if(args.tan_suat) results = results.filter(i => (i.Data?.B_TanSuat||'').includes(args.tan_suat));
+        const limit = args.limit || 10;
+        return {
+            total_found: results.length,
+            processes: results.slice(0, limit).map(i => ({
+                id: i.ID,
+                ten: i.Data?.A_Ten || '---',
+                don_vi: i.Data?.A_DonViDeXuat || '---',
+                ma: i.Data?.A_Ma || '---',
+                rui_ro: i.Data?.B_MucDoRuiRo || '---',
+                tan_suat: i.Data?.B_TanSuat || '---',
+                fte: i.Data?.B_FTE || '---',
+                pham_vi: i.Data?.B_PhamVi || '---',
+                mo_ta: (i.Data?.A_MoTa||'').substring(0,200)
+            }))
+        };
+    }
+
+    if(name === 'get_statistics'){
+        const countF = (field) => {
+            const c={};
+            data.forEach(i=>{ const v=(i.Data?.[field]||'Chưa có')||'Chưa có'; c[v]=(c[v]||0)+1; });
+            return c;
+        };
+        const countMulti = (field) => {
+            const c={};
+            data.forEach(i=>{ (i.Data?.[field]||'').split(',').map(v=>v.trim()).filter(Boolean).forEach(v=>{ c[v]=(c[v]||0)+1; }); });
+            return c;
+        };
+        const donViCount = countF('A_DonViDeXuat');
+        const topDonVi = Object.entries(donViCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+        return {
+            tong_quy_trinh: data.length,
+            phan_bo_rui_ro: countF('B_MucDoRuiRo'),
+            tan_suat_pho_bien: countMulti('B_TanSuat'),
+            pham_vi: countMulti('B_PhamVi'),
+            muc_dich: countMulti('B_MucDich'),
+            nguon_luc: countMulti('E_NguonLuc'),
+            top_don_vi: topDonVi.map(([k,v])=>({don_vi:k, so_qt:v})),
+            so_don_vi_unique: Object.keys(donViCount).length
+        };
+    }
+
+    if(name === 'assess_rpa_fit'){
+        let targets = [];
+        if(args.process_ids === 'all'){
+            targets = data.slice(0, 20); // giới hạn 20 để không quá dài
+        } else {
+            const ids = args.process_ids.toString().split(',').map(s=>s.trim());
+            targets = data.filter(i => ids.includes(String(i.ID)));
+        }
+
+        const scored = targets.map(item => {
+            const d = item.Data || {};
+            let score = 0; const reasons = [];
+
+            // Tần suất cao → điểm cao
+            const ts = d.B_TanSuat || '';
+            if(ts.includes('Hàng ngày')){ score+=30; reasons.push('chạy hàng ngày (+30)'); }
+            else if(ts.includes('Hàng tuần')){ score+=20; reasons.push('chạy hàng tuần (+20)'); }
+            else if(ts.includes('Hàng tháng')){ score+=10; reasons.push('chạy hàng tháng (+10)'); }
+
+            // Rủi ro thấp → ưu tiên cao hơn
+            const rr = d.B_MucDoRuiRo || '';
+            if(rr === 'Thấp'){ score+=25; reasons.push('rủi ro thấp (+25)'); }
+            else if(rr === 'Trung bình'){ score+=10; reasons.push('rủi ro trung bình (+10)'); }
+            else if(rr === 'Cao'){ score-=10; reasons.push('rủi ro cao (-10)'); }
+
+            // FTE > 0.5 → tiết kiệm nhân lực
+            const fte = parseFloat(d.B_FTE) || 0;
+            if(fte >= 2){ score+=20; reasons.push(`FTE cao ${fte} (+20)`); }
+            else if(fte >= 0.5){ score+=10; reasons.push(`FTE ${fte} (+10)`); }
+
+            // Phạm vi rộng → ưu tiên hơn
+            const pv = d.B_PhamVi || '';
+            if(pv.includes('Toàn hệ thống')){ score+=15; reasons.push('phạm vi toàn hệ thống (+15)'); }
+            else if(pv.includes('Liên phòng')){ score+=8; reasons.push('phạm vi liên phòng (+8)'); }
+
+            // Dữ liệu số hóa/cấu trúc → dễ làm bot hơn
+            const cl = d.C_Loai || '';
+            if(cl.includes('Có cấu trúc')){ score+=10; reasons.push('dữ liệu có cấu trúc (+10)'); }
+
+            score = Math.max(0, Math.min(100, score));
+            const level = score >= 70 ? '🟢 Rất phù hợp' : score >= 45 ? '🟡 Phù hợp' : '🔴 Cần xem xét';
+
+            return { id: item.ID, ten: d.A_Ten||'---', don_vi: d.A_DonViDeXuat||'---', diem_rpa: score, muc_do: level, ly_do: reasons.join(', ') || 'Chưa đủ thông tin' };
+        });
+
+        return {
+            danh_gia: scored.sort((a,b) => b.diem_rpa - a.diem_rpa),
+            ghi_chu: 'Điểm từ 0-100. ≥70: Rất phù hợp, 45-69: Phù hợp, <45: Cần xem xét thêm'
+        };
+    }
+
+    if(name === 'suggest_priority'){
+        const topN = args.top_n || 5;
+        // Assess all rồi lấy top N
+        const assessed = handleToolCall('assess_rpa_fit', { process_ids: 'all' });
+        const top = assessed.danh_gia.slice(0, topN);
+        return {
+            top_uu_tien: top,
+            tong_danh_gia: data.length,
+            khuyen_nghi: `Tập trung vào ${topN} quy trình có điểm RPA cao nhất để tối đa hóa ROI triển khai bot.`
+        };
+    }
+
+    return { error: 'Tool không tồn tại' };
+}
+
+// ============================================================
+//  MAIN SEND FUNCTION — Groq agentic loop (OpenAI-compatible)
+// ============================================================
+async function sendChat(){
+    if(aiThinking) return;
+    // key auto-loaded from bootstrap
+    if(!_aiKey && window.__ak) _storeKey(window.__ak);
+    if(!_aiKey){ showToast('❌ Lỗi khởi tạo key!', true); return; }
+
+    const input = document.getElementById('chatInput');
+    const userText = input.value.trim();
+    if(!userText) return;
+
+    input.value = ''; input.style.height = 'auto';
+    document.getElementById('btnSendChat').disabled = true;
+    aiThinking = true;
+
+    appendMsg('user', userText);
+    // OpenAI format history
+    chatHistory.push({ role: 'user', content: userText });
+    showTyping();
+
+    try {
+        const toolsUsedThisRound = [];
+        let maxLoops = 5, loopCount = 0;
+
+        while(loopCount < maxLoops){
+            loopCount++;
+
+            const body = {
+                model: groqModel,
+                messages: [
+                    { role: 'system', content: buildSystemPrompt() },
+                    ...chatHistory
+                ],
+                tools: GROQ_TOOLS,
+                tool_choice: 'auto',
+                temperature: 0.6,
+                max_tokens: 2048
+            };
+
+            // Decode key từ encoded memory mỗi lần call
+            const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + _loadKey()
+                },
+                body: JSON.stringify(body)
+            });
+
+            if(!res.ok){
+                const err = await res.json();
+                const msg = err?.error?.message || `HTTP ${res.status}`;
+                if(res.status === 401) throw new Error('🔑 API key không hợp lệ. Vào <strong>Cấu hình</strong> để nhập lại key.');
+                if(res.status === 429) throw new Error(`⏳ Hết rate limit. Groq free: 14,400 req/ngày. Thử đổi model nhỏ hơn hoặc chờ 1 phút.`);
+                throw new Error(msg);
+            }
+
+            const data = await res.json();
+            const choice = data.choices?.[0];
+            const msg = choice?.message;
+
+            if(!msg) throw new Error('Groq không trả về nội dung');
+
+            // Thêm response vào history
+            chatHistory.push(msg);
+
+            // Kiểm tra tool calls
+            const toolCalls = msg.tool_calls || [];
+
+            if(toolCalls.length === 0){
+                // Xong — render text
+                hideTyping();
+                appendMsg('ai', renderMarkdown(msg.content || ''), toolsUsedThisRound);
+                break;
+            }
+
+            // Thực thi từng tool
+            for(const tc of toolCalls){
+                const name = tc.function.name;
+                let args = {};
+                try { args = JSON.parse(tc.function.arguments || '{}'); } catch(e){}
+                toolsUsedThisRound.push(name.replace(/_/g,' '));
+                const result = handleToolCall(name, args);
+                // Thêm tool result vào history (OpenAI format)
+                chatHistory.push({
+                    role: 'tool',
+                    tool_call_id: tc.id,
+                    content: JSON.stringify(result)
+                });
+            }
+        }
+
+    } catch(err) {
+        hideTyping();
+        console.error('Groq error:', err);
+        appendMsg('ai', `<span style="color:#ef4444;font-weight:800;">❌ Lỗi:</span> ${err.message}<br><br><span style="color:#64748b;font-size:0.85em;font-weight:700;">💡 Gợi ý: Thử đổi sang model <strong>Llama 3 8B (Nhanh)</strong> hoặc <strong>⚙️ Cấu hình</strong> lại key.</span>`);
+    } finally {
+        aiThinking = false;
+        document.getElementById('btnSendChat').disabled = false;
+    }
+}
+
+function buildSystemPrompt(){
+    const total = allDataCache.length;
+    const donViList = [...new Set(allDataCache.map(i=>i.Data?.A_DonViDeXuat).filter(Boolean))].join(', ');
+    return `Bạn là RPA Hub AI Agent của Vietcombank — chuyên gia phân tích dữ liệu RPA, chạy trên Groq với model Qwen3.
+
+NGỮ CẢNH:
+- Hệ thống quản lý đăng ký quy trình RPA của Vietcombank
+- Hiện có ${total} quy trình trong hệ thống
+- Các đơn vị: ${donViList || 'đang cập nhật'}
+- Người dùng hiện tại: ${userEmail}
+
+NHIỆM VỤ:
+1. Trả lời câu hỏi về dữ liệu quy trình RPA
+2. Phân tích và thống kê dữ liệu
+3. Đánh giá độ phù hợp triển khai bot RPA
+4. Gợi ý ưu tiên triển khai dựa trên dữ liệu thực tế
+
+NGUYÊN TẮC:
+- Luôn dùng tools để lấy dữ liệu thực tế trước khi trả lời
+- Trả lời bằng TIẾNG VIỆT, ngắn gọn, có số liệu cụ thể
+- Dùng emoji để dễ đọc
+- Khi đánh giá RPA fit, giải thích rõ lý do
+- Nếu không đủ data, nói rõ điều đó
+
+FORMAT trả lời: Markdown nhẹ (**, -, ##). Không quá dài dòng.`;
+}
+
+</script>
+</body>
+</html>
